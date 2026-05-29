@@ -50,14 +50,14 @@
     <!-- FİLTRELER -->
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
       <button class="filter-btn active" onclick="filterProducts('All')">All</button>
-      <button class="filter-btn" onclick="filterProducts('Technology')">Technology</button>
-      <button class="filter-btn" onclick="filterProducts('Clothing')">Clothing</button>
-      <button class="filter-btn" onclick="filterProducts('Shoes')">Shoes</button>
-      <button class="filter-btn" onclick="filterProducts('Jewelry')">Jewelry</button>
-      <button class="filter-btn" onclick="filterProducts('Toys')">Toys</button>
-      <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
-      <button class="filter-btn" onclick="filterProducts('Home & Living')">Home & Living</button>
-      <button class="filter-btn" onclick="filterProducts('Cosmetics')">Cosmetics</button>
+      <button class="filter-btn" onclick="filterProducts('Technology')">💻 Technology</button>
+      <button class="filter-btn" onclick="filterProducts('Clothing')">👕 Clothing</button>
+      <button class="filter-btn" onclick="filterProducts('Shoes')">👟 Shoes</button>
+      <button class="filter-btn" onclick="filterProducts('Jewelry')">💎 Jewelry</button>
+      <button class="filter-btn" onclick="filterProducts('Toys')">🧸 Toys</button>
+      <button class="filter-btn" onclick="filterProducts('Books')">📚 Books</button>
+      <button class="filter-btn" onclick="filterProducts('Home & Living')">🏠 Home & Living</button>
+      <button class="filter-btn" onclick="filterProducts('Cosmetics')">💄 Cosmetics</button>
     </div>
 
     <!-- ARAMA -->
@@ -110,7 +110,19 @@
     async function loadProducts() {
       const res = await fetch('/api/products');
       allProducts = await res.json();
-      renderProducts(allProducts);
+
+      // URL'den kategori parametresi oku
+      const params = new URLSearchParams(window.location.search);
+      const urlCategory = params.get('category');
+      if (urlCategory) {
+        activeCategory = urlCategory;
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          const btnText = btn.textContent.replace(/💻|👕|👟|💎|🧸|📚|🏠|💄/g, '').trim();
+          btn.classList.toggle('active', btnText === urlCategory);
+        });
+      }
+
+      applyFilters();
     }
 
     function renderProducts(products) {
@@ -142,7 +154,8 @@
     function filterProducts(category) {
       activeCategory = category;
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent === category);
+        const btnText = btn.textContent.replace(/💻|👕|👟|💎|🧸|📚|🏠|💄/g, '').trim();
+        btn.classList.toggle('active', btnText === category || btn.textContent === category);
       });
       applyFilters();
     }
