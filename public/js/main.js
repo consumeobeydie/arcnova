@@ -1,4 +1,5 @@
 let cart = JSON.parse(localStorage.getItem('arcnova-cart')) || [];
+let selectedProvider = null;
 
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -32,20 +33,29 @@ function showToast(message) {
   setTimeout(() => toast.remove(), 3000);
 }
 
+// EIP-6963 provider discovery
+const providers = [];
+
+window.addEventListener('eip6963:announceProvider', (event) => {
+  providers.push(event.detail);
+});
+
+window.dispatchEvent(new Event('eip6963:requestProvider'));
+
 async function connectWallet() {
   try {
-    // EIP-6963 — yeni MetaMask bağlantı yöntemi
-    if (window.ethereum && window.ethereum.providers) {
-      const metaMaskProvider = window.ethereum.providers.find(p => p.isMetaMask);
-      if (metaMaskProvider) {
-        const accounts = await metaMaskProvider.request({ method: 'eth_requestAccounts' });
-        handleAccounts(accounts);
-        return;
-      }
+    // EIP-6963 ile dene
+    if (providers.length > 0) {
+      const metamask = providers.find(p => p.info.name.toLowerCase().includes('metamask')) || providers[0];
+      selectedProvider = metamask.provider;
+      const accounts = await selectedProvider.request({ method: 'eth_requestAccounts' });
+      handleAccounts(accounts);
+      return;
     }
 
-    // Eski yöntem
+    // window.ethereum ile dene
     if (window.ethereum) {
+      selectedProvider = window.ethereum;
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       handleAccounts(accounts);
       return;
@@ -58,14 +68,14 @@ async function connectWallet() {
     if (err.code === 4001) {
       alert('Connection rejected. Please approve in MetaMask.');
     } else {
-      alert('Could not connect. Error: ' + err.message);
+      alert('Could not connect: ' + err.message);
     }
   }
 }
 
 function handleAccounts(accounts) {
   if (!accounts || accounts.length === 0) {
-    alert('No accounts found. Please unlock MetaMask.');
+    alert('No accounts found.');
     return;
   }
   const address = accounts[0];
@@ -77,11 +87,15 @@ function handleAccounts(accounts) {
     btn.style.color = '#00D4AA';
   }
   localStorage.setItem('walletAddress', address);
+  localStorage.setItem('arcnova-provider', 'connected');
   showToast('Wallet connected! ✅');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
+
+  // EIP-6963 provider iste
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
 
   const walletBtn = document.getElementById('connectWallet');
   if (walletBtn) walletBtn.addEventListener('click', connectWallet);
