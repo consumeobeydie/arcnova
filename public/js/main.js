@@ -33,7 +33,7 @@ function showToast(message) {
   const toast = document.createElement('div');
   toast.style.cssText = `
     position: fixed; bottom: 24px; right: 24px;
-    background: #00D4AA; color: #000;
+    background: #00D4FF; color: #000;
     padding: 12px 24px; border-radius: 12px;
     font-weight: 600; font-size: 14px;
     z-index: 9999;
@@ -64,8 +64,8 @@ function showWalletModal() {
       ? detectedProviders.map(p => `
           <button onclick="connectWithProvider('${p.info.uuid}')" style="
             width: 100%;
-            background: #0f0f1a;
-            border: 1px solid #2a2a4a;
+            background: #0d0d24;
+            border: 1px solid #1a1a3a;
             color: white;
             padding: 16px 20px;
             border-radius: 12px;
@@ -77,7 +77,7 @@ function showWalletModal() {
             gap: 12px;
             margin-bottom: 12px;
             text-align: left;
-          " onmouseover="this.style.borderColor='#00D4AA'" onmouseout="this.style.borderColor='#2a2a4a'">
+          " onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
             <img src="${p.info.icon}" width="32" height="32" style="border-radius:8px;" onerror="this.style.display='none'"/>
             <span>${p.info.name}</span>
           </button>
@@ -85,8 +85,8 @@ function showWalletModal() {
       : window.ethereum
         ? `<button onclick="connectWithEthereum()" style="
             width: 100%;
-            background: #0f0f1a;
-            border: 1px solid #2a2a4a;
+            background: #0d0d24;
+            border: 1px solid #1a1a3a;
             color: white;
             padding: 16px 20px;
             border-radius: 12px;
@@ -97,15 +97,15 @@ function showWalletModal() {
             align-items: center;
             gap: 12px;
             margin-bottom: 12px;
-          " onmouseover="this.style.borderColor='#00D4AA'" onmouseout="this.style.borderColor='#2a2a4a'">
+          " onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
             🦊 <span>Browser Wallet</span>
           </button>`
         : `<p style="color:#888; text-align:center; padding:20px;">No wallet found. Please install MetaMask.</p>`;
 
     modal.innerHTML = `
       <div style="
-        background: #1a1a2e;
-        border: 1px solid #2a2a4a;
+        background: #0d0d24;
+        border: 1px solid #1a1a3a;
         border-radius: 20px;
         padding: 32px;
         width: 100%;
@@ -138,6 +138,7 @@ async function connectWithProvider(uuid) {
 
   try {
     selectedProvider = walletData.provider;
+    window.__arcnovaProvider = selectedProvider;
     const accounts = await selectedProvider.request({ method: 'eth_requestAccounts' });
     document.getElementById('walletModal')?.remove();
     handleAccounts(accounts);
@@ -154,6 +155,7 @@ async function connectWithProvider(uuid) {
 async function connectWithEthereum() {
   try {
     selectedProvider = window.ethereum;
+    window.__arcnovaProvider = selectedProvider;
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     document.getElementById('walletModal')?.remove();
     handleAccounts(accounts);
@@ -182,10 +184,11 @@ function handleAccounts(accounts) {
   const btn = document.getElementById('connectWallet');
   if (btn) {
     btn.textContent = `✅ ${short}`;
-    btn.style.background = 'rgba(0,212,170,0.1)';
-    btn.style.color = '#00D4AA';
+    btn.style.background = 'rgba(0,212,255,0.1)';
+    btn.style.color = '#00D4FF';
   }
   localStorage.setItem('walletAddress', address);
+  window.__arcnovaProvider = selectedProvider;
   showToast('Wallet connected! ✅');
 }
 
@@ -197,8 +200,8 @@ function showWalletOptions() {
   modal.id = 'walletOptionsModal';
   modal.style.cssText = `
     position: fixed; top: 70px; right: 24px;
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: #0d0d24;
+    border: 1px solid #1a1a3a;
     border-radius: 12px;
     padding: 8px;
     z-index: 99999;
@@ -210,16 +213,16 @@ function showWalletOptions() {
   const short = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
 
   modal.innerHTML = `
-    <div style="padding:12px 16px; border-bottom:1px solid #2a2a4a; margin-bottom:8px;">
+    <div style="padding:12px 16px; border-bottom:1px solid #1a1a3a; margin-bottom:8px;">
       <div style="font-size:11px; color:#888; margin-bottom:4px;">CONNECTED</div>
-      <div style="font-family:monospace; font-size:13px; color:#00D4AA;">${short}</div>
+      <div style="font-family:monospace; font-size:13px; color:#00D4FF;">${short}</div>
     </div>
     <button onclick="copyAddress()" style="
       width:100%; background:none; border:none; color:#ccc;
       padding:10px 16px; cursor:pointer; font-size:13px;
       text-align:left; border-radius:8px;
       display:flex; align-items:center; gap:8px;
-    " onmouseover="this.style.background='#0f0f1a'" onmouseout="this.style.background='none'">
+    " onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">
       📋 Copy Address
     </button>
     <button onclick="disconnectWallet()" style="
@@ -227,7 +230,7 @@ function showWalletOptions() {
       padding:10px 16px; cursor:pointer; font-size:13px;
       text-align:left; border-radius:8px;
       display:flex; align-items:center; gap:8px;
-    " onmouseover="this.style.background='#0f0f1a'" onmouseout="this.style.background='none'">
+    " onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">
       🔌 Disconnect
     </button>
   `;
@@ -253,12 +256,13 @@ function copyAddress() {
 function disconnectWallet() {
   localStorage.removeItem('walletAddress');
   selectedProvider = null;
+  window.__arcnovaProvider = null;
 
   const btn = document.getElementById('connectWallet');
   if (btn) {
     btn.textContent = '🔗 Connect Wallet';
     btn.style.background = 'none';
-    btn.style.color = '#00D4AA';
+    btn.style.color = '#00D4FF';
   }
 
   document.getElementById('walletOptionsModal')?.remove();
@@ -277,8 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (saved && walletBtn) {
     const short = `${saved.slice(0, 6)}...${saved.slice(-4)}`;
     walletBtn.textContent = `✅ ${short}`;
-    walletBtn.style.background = 'rgba(0,212,170,0.1)';
-    walletBtn.style.color = '#00D4AA';
+    walletBtn.style.background = 'rgba(0,212,255,0.1)';
+    walletBtn.style.color = '#00D4FF';
   }
 
   loadFeaturedProducts();
