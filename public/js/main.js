@@ -2,7 +2,6 @@ let cart = JSON.parse(localStorage.getItem('arcnova-cart')) || [];
 let selectedProvider = null;
 const detectedProviders = [];
 
-// EIP-6963 ile tüm cüzdanları dinle
 window.addEventListener('eip6963:announceProvider', (event) => {
   const { info, provider } = event.detail;
   if (!detectedProviders.find(p => p.info.uuid === info.uuid)) {
@@ -45,11 +44,9 @@ function showToast(message) {
 }
 
 function showWalletModal() {
-  // Eski modal varsa kaldır
   const existing = document.getElementById('walletModal');
   if (existing) existing.remove();
 
-  // EIP-6963 provider'ları yeniden iste
   window.dispatchEvent(new Event('eip6963:requestProvider'));
 
   setTimeout(() => {
@@ -78,7 +75,6 @@ function showWalletModal() {
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: border-color 0.2s;
             margin-bottom: 12px;
             text-align: left;
           " onmouseover="this.style.borderColor='#00D4AA'" onmouseout="this.style.borderColor='#2a2a4a'">
@@ -130,7 +126,6 @@ function showWalletModal() {
 
     document.body.appendChild(modal);
 
-    // Modal dışına tıklayınca kapat
     modal.addEventListener('click', (e) => {
       if (e.target === modal) modal.remove();
     });
@@ -169,7 +164,12 @@ async function connectWithEthereum() {
 }
 
 function connectWallet() {
-  showWalletModal();
+  const address = localStorage.getItem('walletAddress');
+  if (address) {
+    showWalletOptions();
+  } else {
+    showWalletModal();
+  }
 }
 
 function handleAccounts(accounts) {
@@ -187,6 +187,82 @@ function handleAccounts(accounts) {
   }
   localStorage.setItem('walletAddress', address);
   showToast('Wallet connected! ✅');
+}
+
+function showWalletOptions() {
+  const existing = document.getElementById('walletOptionsModal');
+  if (existing) { existing.remove(); return; }
+
+  const modal = document.createElement('div');
+  modal.id = 'walletOptionsModal';
+  modal.style.cssText = `
+    position: fixed; top: 70px; right: 24px;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 8px;
+    z-index: 99999;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  `;
+
+  const address = localStorage.getItem('walletAddress');
+  const short = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
+
+  modal.innerHTML = `
+    <div style="padding:12px 16px; border-bottom:1px solid #2a2a4a; margin-bottom:8px;">
+      <div style="font-size:11px; color:#888; margin-bottom:4px;">CONNECTED</div>
+      <div style="font-family:monospace; font-size:13px; color:#00D4AA;">${short}</div>
+    </div>
+    <button onclick="copyAddress()" style="
+      width:100%; background:none; border:none; color:#ccc;
+      padding:10px 16px; cursor:pointer; font-size:13px;
+      text-align:left; border-radius:8px;
+      display:flex; align-items:center; gap:8px;
+    " onmouseover="this.style.background='#0f0f1a'" onmouseout="this.style.background='none'">
+      📋 Copy Address
+    </button>
+    <button onclick="disconnectWallet()" style="
+      width:100%; background:none; border:none; color:#ff4444;
+      padding:10px 16px; cursor:pointer; font-size:13px;
+      text-align:left; border-radius:8px;
+      display:flex; align-items:center; gap:8px;
+    " onmouseover="this.style.background='#0f0f1a'" onmouseout="this.style.background='none'">
+      🔌 Disconnect
+    </button>
+  `;
+
+  document.body.appendChild(modal);
+
+  setTimeout(() => {
+    document.addEventListener('click', (e) => {
+      if (!modal.contains(e.target)) modal.remove();
+    }, { once: true });
+  }, 100);
+}
+
+function copyAddress() {
+  const address = localStorage.getItem('walletAddress');
+  if (address) {
+    navigator.clipboard.writeText(address);
+    showToast('Address copied! 📋');
+  }
+  document.getElementById('walletOptionsModal')?.remove();
+}
+
+function disconnectWallet() {
+  localStorage.removeItem('walletAddress');
+  selectedProvider = null;
+
+  const btn = document.getElementById('connectWallet');
+  if (btn) {
+    btn.textContent = '🔗 Connect Wallet';
+    btn.style.background = 'none';
+    btn.style.color = '#00D4AA';
+  }
+
+  document.getElementById('walletOptionsModal')?.remove();
+  showToast('Wallet disconnected! 🔌');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
