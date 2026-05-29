@@ -2,157 +2,380 @@ const express = require('express');
 const router = express.Router();
 
 const products = [
-  // TEKNOLOJİ
+  // TECHNOLOGY
   {
     id: 1,
-    name: "Arc Wireless Earbuds",
-    price: 49.99,
+    name: "Wireless Noise-Cancelling Headphones",
+    price: 0.005,
     category: "Technology",
-    image: "https://picsum.photos/seed/earbuds/400/400",
-    description: "Premium wireless earbuds with noise cancellation and 24h battery life.",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+    description: "Premium wireless headphones with active noise cancellation and 30h battery life.",
     stock: 15
   },
   {
     id: 2,
-    name: "Nova Smart Watch",
-    price: 129.99,
+    name: "Smart Watch Pro",
+    price: 0.005,
     category: "Technology",
-    image: "https://picsum.photos/seed/smartwatch/400/400",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
     description: "Smart watch with health tracking, GPS and USDC payment support.",
     stock: 8
   },
-  // GİYİM
   {
     id: 3,
-    name: "Arc Genesis Hoodie",
-    price: 49.99,
-    category: "Clothing",
-    image: "https://picsum.photos/seed/hoodie/400/400",
-    description: "Premium hoodie with Arc Network theme. 100% organic cotton.",
-    stock: 20
+    name: "Mechanical Keyboard",
+    price: 0.004,
+    category: "Technology",
+    image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=400&fit=crop",
+    description: "RGB mechanical keyboard with tactile switches and aluminum body.",
+    stock: 12
   },
   {
     id: 4,
-    name: "ArcNova T-Shirt",
-    price: 29.99,
-    category: "Clothing",
-    image: "https://picsum.photos/seed/tshirt/400/400",
-    description: "Minimal design, premium quality.",
-    stock: 30
+    name: "Portable Bluetooth Speaker",
+    price: 0.003,
+    category: "Technology",
+    image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
+    description: "Waterproof portable speaker with 360° sound and 24h battery.",
+    stock: 20
   },
-  // AYAKKABI
   {
     id: 5,
-    name: "Nova Sneakers",
-    price: 89.99,
-    category: "Shoes",
-    image: "https://picsum.photos/seed/sneaker/400/400",
-    description: "Limited edition sneakers with star design.",
-    stock: 8
+    name: "4K Webcam",
+    price: 0.002,
+    category: "Technology",
+    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=400&fit=crop",
+    description: "Ultra HD 4K webcam with built-in microphone and auto-focus.",
+    stock: 10
   },
+
+  // CLOTHING
   {
     id: 6,
-    name: "Arc Runner Pro",
-    price: 109.99,
-    category: "Shoes",
-    image: "https://picsum.photos/seed/shoes/400/400",
-    description: "Professional running shoes with advanced cushioning.",
-    stock: 12
+    name: "Classic White Oxford Shirt",
+    price: 0.003,
+    category: "Clothing",
+    image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=400&h=400&fit=crop",
+    description: "Premium cotton oxford shirt, perfect for any occasion.",
+    stock: 25
   },
-  // TAKI
   {
     id: 7,
-    name: "Nova Chain Necklace",
-    price: 59.99,
-    category: "Jewelry",
-    image: "https://picsum.photos/seed/necklace/400/400",
-    description: "Sterling silver chain necklace with Arc star pendant.",
-    stock: 10
+    name: "Black Slim Fit Jeans",
+    price: 0.004,
+    category: "Clothing",
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop",
+    description: "Stretch slim fit jeans with premium denim fabric.",
+    stock: 30
   },
   {
     id: 8,
-    name: "Arc Ring",
-    price: 39.99,
-    category: "Jewelry",
-    image: "https://picsum.photos/seed/ring/400/400",
-    description: "Minimalist silver ring with blockchain engraving.",
-    stock: 15
+    name: "Oversized Hoodie",
+    price: 0.003,
+    category: "Clothing",
+    image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&h=400&fit=crop",
+    description: "Cozy oversized hoodie made from 100% organic cotton.",
+    stock: 20
   },
-  // OYUNCAK
   {
     id: 9,
-    name: "Arc Robot Kit",
-    price: 34.99,
-    category: "Toys",
-    image: "https://picsum.photos/seed/robot/400/400",
-    description: "Build your own robot kit. Perfect for kids aged 8+.",
-    stock: 20
+    name: "Wool Blazer",
+    price: 0.005,
+    category: "Clothing",
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=400&fit=crop",
+    description: "Elegant wool blend blazer for a sharp professional look.",
+    stock: 15
   },
   {
     id: 10,
-    name: "Nova Puzzle 1000",
-    price: 19.99,
-    category: "Toys",
-    image: "https://picsum.photos/seed/puzzle/400/400",
-    description: "1000-piece puzzle featuring Arc Network artwork.",
-    stock: 25
+    name: "Linen Summer Dress",
+    price: 0.003,
+    category: "Clothing",
+    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop",
+    description: "Lightweight linen dress perfect for warm summer days.",
+    stock: 18
   },
-  // KİTAP
+
+  // SHOES
   {
     id: 11,
-    name: "Web3 for Everyone",
-    price: 24.99,
-    category: "Books",
-    image: "https://picsum.photos/seed/book1/400/400",
-    description: "A beginner's guide to blockchain, USDC and Web3.",
-    stock: 30
+    name: "White Leather Sneakers",
+    price: 0.004,
+    category: "Shoes",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+    description: "Classic white leather sneakers that go with everything.",
+    stock: 20
   },
   {
     id: 12,
-    name: "The Future of Money",
-    price: 19.99,
-    category: "Books",
-    image: "https://picsum.photos/seed/book2/400/400",
-    description: "How stablecoins are reshaping the global economy.",
-    stock: 20
+    name: "Running Shoes",
+    price: 0.005,
+    category: "Shoes",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+    description: "Lightweight running shoes with advanced cushioning technology.",
+    stock: 15
   },
-  // EV & YAŞAM
   {
     id: 13,
-    name: "Arc Desk Lamp",
-    price: 44.99,
-    category: "Home & Living",
-    image: "https://picsum.photos/seed/lamp/400/400",
-    description: "Smart LED desk lamp with touch control and USB-C charging.",
-    stock: 18
+    name: "Chelsea Boots",
+    price: 0.005,
+    category: "Shoes",
+    image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&h=400&fit=crop",
+    description: "Genuine leather Chelsea boots with elastic side panels.",
+    stock: 10
   },
   {
     id: 14,
-    name: "Nova Mug",
-    price: 14.99,
-    category: "Home & Living",
-    image: "https://picsum.photos/seed/mug/400/400",
-    description: "Double-wall insulated mug. Keeps your drink hot for 6 hours.",
-    stock: 40
+    name: "Slip-On Loafers",
+    price: 0.003,
+    category: "Shoes",
+    image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=400&h=400&fit=crop",
+    description: "Comfortable slip-on loafers in premium suede.",
+    stock: 12
   },
-  // KOZMETİK
   {
     id: 15,
-    name: "Arc Glow Serum",
-    price: 34.99,
-    category: "Cosmetics",
-    image: "https://picsum.photos/seed/serum/400/400",
-    description: "Vitamin C brightening serum for radiant skin.",
-    stock: 22
+    name: "High-Top Basketball Shoes",
+    price: 0.004,
+    category: "Shoes",
+    image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=400&fit=crop",
+    description: "High-top basketball shoes with ankle support and grip sole.",
+    stock: 8
   },
+
+  // JEWELRY
   {
     id: 16,
-    name: "Nova Lip Set",
-    price: 22.99,
+    name: "Diamond Stud Earrings",
+    price: 0.005,
+    category: "Jewelry",
+    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop",
+    description: "Elegant diamond stud earrings in 18k white gold setting.",
+    stock: 10
+  },
+  {
+    id: 17,
+    name: "Gold Chain Necklace",
+    price: 0.005,
+    category: "Jewelry",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=400&fit=crop",
+    description: "18k gold chain necklace, 45cm length.",
+    stock: 12
+  },
+  {
+    id: 18,
+    name: "Silver Bangle Bracelet",
+    price: 0.002,
+    category: "Jewelry",
+    image: "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=400&h=400&fit=crop",
+    description: "Sterling silver bangle bracelet with engraved pattern.",
+    stock: 15
+  },
+  {
+    id: 19,
+    name: "Rose Gold Ring",
+    price: 0.003,
+    category: "Jewelry",
+    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&h=400&fit=crop",
+    description: "Delicate rose gold ring with minimalist design.",
+    stock: 20
+  },
+  {
+    id: 20,
+    name: "Pearl Drop Earrings",
+    price: 0.004,
+    category: "Jewelry",
+    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=400&fit=crop",
+    description: "Classic freshwater pearl drop earrings in gold setting.",
+    stock: 8
+  },
+
+  // TOYS
+  {
+    id: 21,
+    name: "LEGO Architecture Set",
+    price: 0.004,
+    category: "Toys",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
+    description: "Creative LEGO architecture set for ages 12+.",
+    stock: 20
+  },
+  {
+    id: 22,
+    name: "Remote Control Car",
+    price: 0.003,
+    category: "Toys",
+    image: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop",
+    description: "High-speed remote control car with 4WD and LED lights.",
+    stock: 15
+  },
+  {
+    id: 23,
+    name: "Wooden Puzzle Set",
+    price: 0.002,
+    category: "Toys",
+    image: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=400&h=400&fit=crop",
+    description: "Educational wooden puzzle set for children aged 3+.",
+    stock: 25
+  },
+  {
+    id: 24,
+    name: "Plush Teddy Bear",
+    price: 0.001,
+    category: "Toys",
+    image: "https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=400&h=400&fit=crop",
+    description: "Super soft plush teddy bear, 40cm tall.",
+    stock: 30
+  },
+  {
+    id: 25,
+    name: "Science Experiment Kit",
+    price: 0.003,
+    category: "Toys",
+    image: "https://images.unsplash.com/photo-1532094349884-543559059a4f?w=400&h=400&fit=crop",
+    description: "Fun science experiment kit for curious kids aged 8+.",
+    stock: 18
+  },
+
+  // BOOKS
+  {
+    id: 26,
+    name: "The Psychology of Money",
+    price: 0.001,
+    category: "Books",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop",
+    description: "Timeless lessons on wealth, greed, and happiness.",
+    stock: 30
+  },
+  {
+    id: 27,
+    name: "Atomic Habits",
+    price: 0.001,
+    category: "Books",
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&h=400&fit=crop",
+    description: "An easy and proven way to build good habits and break bad ones.",
+    stock: 25
+  },
+  {
+    id: 28,
+    name: "Web3 Developer Guide",
+    price: 0.002,
+    category: "Books",
+    image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=400&h=400&fit=crop",
+    description: "Complete guide to building decentralized applications.",
+    stock: 20
+  },
+  {
+    id: 29,
+    name: "The Future of Finance",
+    price: 0.002,
+    category: "Books",
+    image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=400&fit=crop",
+    description: "How blockchain and stablecoins are reshaping global finance.",
+    stock: 15
+  },
+  {
+    id: 30,
+    name: "Design Thinking",
+    price: 0.001,
+    category: "Books",
+    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&h=400&fit=crop",
+    description: "A guide to creative problem solving and innovation.",
+    stock: 20
+  },
+
+  // HOME & LIVING
+  {
+    id: 31,
+    name: "Ceramic Coffee Mug Set",
+    price: 0.002,
+    category: "Home & Living",
+    image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop",
+    description: "Set of 4 handcrafted ceramic mugs in earthy tones.",
+    stock: 20
+  },
+  {
+    id: 32,
+    name: "Scented Soy Candle",
+    price: 0.001,
+    category: "Home & Living",
+    image: "https://images.unsplash.com/photo-1602178506450-3b8c66fd4699?w=400&h=400&fit=crop",
+    description: "Hand-poured soy wax candle with lavender and vanilla scent.",
+    stock: 35
+  },
+  {
+    id: 33,
+    name: "Minimalist Desk Lamp",
+    price: 0.003,
+    category: "Home & Living",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop",
+    description: "LED desk lamp with adjustable brightness and USB charging port.",
+    stock: 18
+  },
+  {
+    id: 34,
+    name: "Linen Throw Pillow",
+    price: 0.002,
+    category: "Home & Living",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop",
+    description: "Soft linen throw pillow with natural texture, 45x45cm.",
+    stock: 25
+  },
+  {
+    id: 35,
+    name: "Bamboo Kitchen Organizer",
+    price: 0.002,
+    category: "Home & Living",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop",
+    description: "Eco-friendly bamboo kitchen organizer with 4 compartments.",
+    stock: 22
+  },
+
+  // COSMETICS
+  {
+    id: 36,
+    name: "Vitamin C Face Serum",
+    price: 0.003,
     category: "Cosmetics",
-    image: "https://picsum.photos/seed/lipset/400/400",
-    description: "Set of 6 long-lasting lip colors. Cruelty-free formula.",
-    stock: 16
+    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop",
+    description: "Brightening vitamin C serum for radiant, glowing skin.",
+    stock: 25
+  },
+  {
+    id: 37,
+    name: "Hydrating Face Cream",
+    price: 0.004,
+    category: "Cosmetics",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop",
+    description: "Deep hydration face cream with hyaluronic acid and ceramides.",
+    stock: 20
+  },
+  {
+    id: 38,
+    name: "Natural Lip Balm Set",
+    price: 0.001,
+    category: "Cosmetics",
+    image: "https://images.unsplash.com/photo-1586495777744-4e6232bf0e9f?w=400&h=400&fit=crop",
+    description: "Set of 5 natural lip balms in berry, vanilla and mint flavors.",
+    stock: 40
+  },
+  {
+    id: 39,
+    name: "Rose Water Toner",
+    price: 0.002,
+    category: "Cosmetics",
+    image: "https://images.unsplash.com/photo-1601049541271-f4f5e33e3f0c?w=400&h=400&fit=crop",
+    description: "Pure rose water facial toner for hydration and pore tightening.",
+    stock: 30
+  },
+  {
+    id: 40,
+    name: "Eyeshadow Palette",
+    price: 0.003,
+    category: "Cosmetics",
+    image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&h=400&fit=crop",
+    description: "18-shade eyeshadow palette with matte and shimmer finishes.",
+    stock: 15
   }
 ];
 
