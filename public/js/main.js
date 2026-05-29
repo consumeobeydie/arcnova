@@ -33,51 +33,51 @@ function showToast(message) {
 }
 
 async function connectWallet() {
-  // MetaMask var mı?
-  if (typeof window.ethereum === 'undefined') {
-    alert('MetaMask not found! Please install MetaMask.');
-    return;
-  }
-
   try {
-    // Önce mevcut hesapları kontrol et
-    let accounts = await window.ethereum.request({ 
-      method: 'eth_accounts' 
-    });
-
-    // Hesap yoksa bağlantı iste
-    if (accounts.length === 0) {
-      accounts = await window.ethereum.request({ 
-        method: 'eth_requestAccounts' 
-      });
+    // EIP-6963 — yeni MetaMask bağlantı yöntemi
+    if (window.ethereum && window.ethereum.providers) {
+      const metaMaskProvider = window.ethereum.providers.find(p => p.isMetaMask);
+      if (metaMaskProvider) {
+        const accounts = await metaMaskProvider.request({ method: 'eth_requestAccounts' });
+        handleAccounts(accounts);
+        return;
+      }
     }
 
-    if (accounts.length === 0) {
-      alert('No accounts found. Please unlock MetaMask.');
+    // Eski yöntem
+    if (window.ethereum) {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      handleAccounts(accounts);
       return;
     }
 
-    const address = accounts[0];
-    const short = `${address.slice(0, 6)}...${address.slice(-4)}`;
-    
-    const btn = document.getElementById('connectWallet');
-    if (btn) {
-      btn.textContent = `✅ ${short}`;
-      btn.style.background = 'rgba(0,212,170,0.1)';
-      btn.style.color = '#00D4AA';
-    }
-    
-    localStorage.setItem('walletAddress', address);
-    showToast('Wallet connected! ✅');
+    alert('MetaMask not found! Please install MetaMask.');
 
   } catch (err) {
     console.error('Wallet error:', err);
     if (err.code === 4001) {
       alert('Connection rejected. Please approve in MetaMask.');
     } else {
-      alert('Could not connect wallet. Please try again.');
+      alert('Could not connect. Error: ' + err.message);
     }
   }
+}
+
+function handleAccounts(accounts) {
+  if (!accounts || accounts.length === 0) {
+    alert('No accounts found. Please unlock MetaMask.');
+    return;
+  }
+  const address = accounts[0];
+  const short = `${address.slice(0, 6)}...${address.slice(-4)}`;
+  const btn = document.getElementById('connectWallet');
+  if (btn) {
+    btn.textContent = `✅ ${short}`;
+    btn.style.background = 'rgba(0,212,170,0.1)';
+    btn.style.color = '#00D4AA';
+  }
+  localStorage.setItem('walletAddress', address);
+  showToast('Wallet connected! ✅');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
     walletBtn.style.color = '#00D4AA';
   }
 
-  // Ana sayfada ürünleri yükle
   loadFeaturedProducts();
 });
 
