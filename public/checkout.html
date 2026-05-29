@@ -52,6 +52,7 @@
     <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px;">Checkout</h1>
     <p style="color: #888; margin-bottom: 40px;">Complete your purchase with USDC on Arc Network</p>
 
+    <!-- STEPS -->
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:40px;">
       <div style="display:flex; align-items:center; gap:8px;">
         <div style="width:28px; height:28px; border-radius:50%; background:#00D4AA; color:#000; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">1</div>
@@ -90,8 +91,21 @@
         </div>
       </div>
 
+      <!-- SHIPPING - OPTİONAL -->
       <div style="background:#1a1a2e; border:1px solid #2a2a4a; border-radius:16px; padding:24px; margin-bottom:24px;">
-        <h2 style="font-size:18px; font-weight:700; margin-bottom:16px;">Shipping Information</h2>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+          <h2 style="font-size:18px; font-weight:700; margin:0;">Shipping Information</h2>
+          <span style="
+            background: rgba(0,212,170,0.1);
+            border: 1px solid rgba(0,212,170,0.3);
+            color: #00D4AA;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+          ">Optional</span>
+        </div>
+        <p style="color:#888; font-size:12px; margin-bottom:20px;">Fill in if you'd like your order delivered to your address</p>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
           <div>
             <label style="color:#888; font-size:12px; display:block; margin-bottom:6px;">FULL NAME</label>
@@ -192,7 +206,6 @@
 
   <script src="/js/main.js"></script>
   <script>
-    // Arc Testnet USDC kontrat adresi (doğru adres)
     const USDC_CONTRACT = '0x3600000000000000000000000000000000000000';
     const STORE_WALLET = '0xcAaDa98159b82b80D7940CFb527f7Ab44E650Cc8';
 
@@ -225,15 +238,7 @@
     }
 
     function goToPayment() {
-      const name = document.getElementById('fullName').value;
-      const email = document.getElementById('email').value;
-      const address = document.getElementById('shippingAddress').value;
-
-      if (!name || !email || !address) {
-        alert('Please fill in all shipping information!');
-        return;
-      }
-
+      // Shipping bilgisi artık zorunlu değil
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
       document.getElementById('step2circle').style.background = '#00D4AA';
@@ -259,14 +264,12 @@
         statusEl.textContent = '⏳ Please confirm the transaction in MetaMask...';
         errorEl.style.display = 'none';
 
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new ethers.BrowserProvider(selectedProvider || window.ethereum);
         const signer = await provider.getSigner();
         const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
 
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const total = subtotal + 0.001;
-
-        // 6 decimal ile miktarı hesapla
         const amount = ethers.parseUnits(total.toFixed(6), 6);
 
         const tx = await usdcContract.transfer(STORE_WALLET, amount);
@@ -282,7 +285,12 @@
             items: cart,
             totalAmount: total.toFixed(3),
             buyerAddress: wallet,
-            txHash
+            txHash,
+            shipping: {
+              name: document.getElementById('fullName').value || null,
+              email: document.getElementById('email').value || null,
+              address: document.getElementById('shippingAddress').value || null,
+            }
           })
         });
 
