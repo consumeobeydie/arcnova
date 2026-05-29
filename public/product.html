@@ -63,74 +63,43 @@
       </p>
 
       <!-- Yorum Formu -->
-      <div id="reviewForm" style="
-        background: #0d0d24;
-        border: 1px solid #1a1a3a;
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 32px;
-      ">
+      <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:16px; padding:24px; margin-bottom:32px;">
         <h3 style="font-size:16px; margin-bottom:16px;">Write a Review</h3>
 
-        <!-- Yıldız -->
         <div style="margin-bottom:16px;">
           <label style="color:#888; font-size:13px; display:block; margin-bottom:8px;">Rating</label>
           <div id="starRating" style="display:flex; gap:8px; font-size:28px; cursor:pointer;">
-            <span onclick="setRating(1)" style="opacity:0.3;">⭐</span>
-            <span onclick="setRating(2)" style="opacity:0.3;">⭐</span>
-            <span onclick="setRating(3)" style="opacity:0.3;">⭐</span>
-            <span onclick="setRating(4)" style="opacity:0.3;">⭐</span>
-            <span onclick="setRating(5)" style="opacity:1;">⭐</span>
+            <span onclick="setRating(1)" style="opacity:0.3; transition:opacity 0.2s;">⭐</span>
+            <span onclick="setRating(2)" style="opacity:0.3; transition:opacity 0.2s;">⭐</span>
+            <span onclick="setRating(3)" style="opacity:0.3; transition:opacity 0.2s;">⭐</span>
+            <span onclick="setRating(4)" style="opacity:0.3; transition:opacity 0.2s;">⭐</span>
+            <span onclick="setRating(5)" style="opacity:1; transition:opacity 0.2s;">⭐</span>
           </div>
         </div>
 
-        <!-- Yorum metni -->
         <textarea id="reviewText" placeholder="Share your experience with this product..." style="
-          width: 100%;
-          background: #080818;
-          border: 1px solid #1a1a3a;
-          color: white;
-          padding: 12px 16px;
-          border-radius: 10px;
-          font-size: 14px;
-          resize: vertical;
-          min-height: 100px;
-          outline: none;
-          font-family: inherit;
-          margin-bottom: 16px;
+          width:100%; background:#080818; border:1px solid #1a1a3a;
+          color:white; padding:12px 16px; border-radius:10px;
+          font-size:14px; resize:vertical; min-height:100px;
+          outline:none; font-family:inherit; margin-bottom:16px;
         "></textarea>
 
-        <!-- Ücret bilgisi -->
-        <div style="
-          background: rgba(0,212,255,0.05);
-          border: 1px solid rgba(0,212,255,0.2);
-          border-radius: 10px;
-          padding: 12px 16px;
-          margin-bottom: 16px;
-          font-size: 13px;
-          color: #00D4FF;
-        ">
-          💡 Submitting a review costs <strong>0.001 USDC</strong> — this prevents spam and records your review on-chain.
+        <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#00D4FF;">
+          💡 Submitting a review costs <strong>0.001 USDC</strong> — prevents spam and records your review on-chain.
         </div>
 
         <div id="reviewStatus" style="display:none; background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#00D4FF;"></div>
         <div id="reviewError" style="display:none; background:rgba(255,68,68,0.05); border:1px solid rgba(255,68,68,0.3); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#ff4444;"></div>
 
         <button onclick="submitReview()" id="submitReviewBtn" style="
-          background: linear-gradient(135deg, #00D4FF, #7B2FBE);
-          color: white;
-          border: none;
-          padding: 12px 24px;
-          border-radius: 10px;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 600;
+          background:linear-gradient(135deg, #00D4FF, #7B2FBE);
+          color:white; border:none; padding:12px 24px;
+          border-radius:10px; cursor:pointer; font-size:14px; font-weight:600;
         ">
           ⛓️ Submit Review on Blockchain
         </button>
       </div>
 
-      <!-- Yorumlar listesi -->
       <div id="reviewsList"></div>
     </div>
   </section>
@@ -187,7 +156,6 @@
 
     let currentProduct = null;
     let selectedRating = 5;
-    let reviews = JSON.parse(localStorage.getItem('arcnova-reviews') || '{}');
 
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
@@ -200,9 +168,7 @@
       document.getElementById('productDetail').innerHTML = `
         <div>
           <img src="${currentProduct.image}" alt="${currentProduct.name}" style="
-            width: 100%;
-            border-radius: 16px;
-            border: 1px solid #1a1a3a;
+            width:100%; border-radius:16px; border:1px solid #1a1a3a;
           "/>
         </div>
         <div>
@@ -216,43 +182,21 @@
           <p style="color:#aaa; line-height:1.8; margin-bottom:32px; font-size:16px;">
             ${currentProduct.description}
           </p>
-          <div style="
-            background: #0d0d24;
-            border: 1px solid #1a1a3a;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 24px;
-            font-size: 13px;
-            color: #888;
-          ">
+          <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:12px; padding:16px; margin-bottom:24px; font-size:13px; color:#888;">
             <div style="margin-bottom:6px;">🔗 <strong style="color:#fff;">Network:</strong> Arc Testnet</div>
             <div style="margin-bottom:6px;">💳 <strong style="color:#fff;">Payment:</strong> USDC</div>
             <div>📦 <strong style="color:#fff;">Stock:</strong> ${currentProduct.stock} units</div>
           </div>
           <button onclick="addToCart(currentProduct)" style="
-            width: 100%;
-            background: linear-gradient(135deg, #00D4FF, #7B2FBE);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            width:100%; background:linear-gradient(135deg, #00D4FF, #7B2FBE);
+            color:white; border:none; padding:16px; border-radius:12px;
+            cursor:pointer; font-size:16px; font-weight:700; margin-bottom:12px;
           ">
             🛒 Add to Cart
           </button>
           <button onclick="window.location.href='/cart.html'" style="
-            width: 100%;
-            background: none;
-            border: 1px solid #1a1a3a;
-            color: #888;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 15px;
-            transition: all 0.2s;
+            width:100%; background:none; border:1px solid #1a1a3a;
+            color:#888; padding:14px; border-radius:12px; cursor:pointer; font-size:15px; transition:all 0.2s;
           " onmouseover="this.style.borderColor='#00D4FF'; this.style.color='#00D4FF'"
              onmouseout="this.style.borderColor='#1a1a3a'; this.style.color='#888'">
             View Cart
@@ -271,32 +215,37 @@
       });
     }
 
-    function loadReviews() {
-      const productReviews = reviews[productId] || [];
-      const list = document.getElementById('reviewsList');
+    async function loadReviews() {
+      try {
+        const res = await fetch(`/api/payment/reviews/${productId}`);
+        const productReviews = await res.json();
+        const list = document.getElementById('reviewsList');
 
-      if (productReviews.length === 0) {
-        list.innerHTML = '<p style="color:#555; text-align:center; padding:40px;">No reviews yet. Be the first to review!</p>';
-        return;
-      }
+        if (productReviews.length === 0) {
+          list.innerHTML = '<p style="color:#555; text-align:center; padding:40px;">No reviews yet. Be the first to review!</p>';
+          return;
+        }
 
-      list.innerHTML = productReviews.map(r => `
-        <div class="review-card">
-          <div class="review-header">
-            <div>
-              <div class="review-address">${r.address}</div>
-              <div class="review-date">${r.date}</div>
+        list.innerHTML = productReviews.map(r => `
+          <div class="review-card">
+            <div class="review-header">
+              <div>
+                <div class="review-address">${r.address}</div>
+                <div class="review-date">${r.date}</div>
+              </div>
+              <div class="review-stars">${'⭐'.repeat(r.rating)}</div>
             </div>
-            <div class="review-stars">${'⭐'.repeat(r.rating)}</div>
+            <div class="review-text">${r.text}</div>
+            <div class="review-tx">
+              ⛓️ <a href="https://testnet.arcscan.app/tx/${r.txHash}" target="_blank">
+                View on ArcScan: ${r.txHash.slice(0, 20)}...
+              </a>
+            </div>
           </div>
-          <div class="review-text">${r.text}</div>
-          <div class="review-tx">
-            ⛓️ <a href="https://testnet.arcscan.app/tx/${r.txHash}" target="_blank">
-              View on ArcScan: ${r.txHash.slice(0, 20)}...
-            </a>
-          </div>
-        </div>
-      `).join('');
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     async function submitReview() {
@@ -323,13 +272,11 @@
         statusEl.textContent = '⏳ Please confirm the 0.001 USDC payment in MetaMask...';
         errorEl.style.display = 'none';
 
-        // Provider bul
         let ethProvider = window.__arcnovaProvider || window.ethereum;
         const provider = new ethers.BrowserProvider(ethProvider);
         const signer = await provider.getSigner();
         const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
 
-        // 0.001 USDC öde
         const amount = ethers.parseUnits(REVIEW_FEE, 6);
         const tx = await usdcContract.transfer(STORE_WALLET, amount);
 
@@ -337,21 +284,18 @@
         const receipt = await tx.wait();
         const txHash = receipt.hash;
 
-        // Yorumu kaydet
-        const review = {
-          address: `${wallet.slice(0, 6)}...${wallet.slice(-4)}`,
-          fullAddress: wallet,
-          rating: selectedRating,
-          text,
-          txHash,
-          date: new Date().toLocaleDateString('en-US', {
-            year: 'numeric', month: 'long', day: 'numeric'
+        // Server'a kaydet
+        await fetch('/api/payment/review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId,
+            address: `${wallet.slice(0, 6)}...${wallet.slice(-4)}`,
+            rating: selectedRating,
+            text,
+            txHash
           })
-        };
-
-        if (!reviews[productId]) reviews[productId] = [];
-        reviews[productId].unshift(review);
-        localStorage.setItem('arcnova-reviews', JSON.stringify(reviews));
+        });
 
         document.getElementById('reviewText').value = '';
         btn.disabled = false;
