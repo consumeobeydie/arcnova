@@ -1,5 +1,16 @@
 let cart = JSON.parse(localStorage.getItem('arcnova-cart')) || [];
 let selectedProvider = null;
+const detectedProviders = [];
+
+// EIP-6963 ile tüm cüzdanları dinle
+window.addEventListener('eip6963:announceProvider', (event) => {
+  const { info, provider } = event.detail;
+  if (!detectedProviders.find(p => p.info.uuid === info.uuid)) {
+    detectedProviders.push({ info, provider });
+  }
+});
+
+window.dispatchEvent(new Event('eip6963:requestProvider'));
 
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -33,44 +44,132 @@ function showToast(message) {
   setTimeout(() => toast.remove(), 3000);
 }
 
-// EIP-6963 provider discovery
-const providers = [];
+function showWalletModal() {
+  // Eski modal varsa kaldır
+  const existing = document.getElementById('walletModal');
+  if (existing) existing.remove();
 
-window.addEventListener('eip6963:announceProvider', (event) => {
-  providers.push(event.detail);
-});
+  // EIP-6963 provider'ları yeniden iste
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
 
-window.dispatchEvent(new Event('eip6963:requestProvider'));
+  setTimeout(() => {
+    const modal = document.createElement('div');
+    modal.id = 'walletModal';
+    modal.style.cssText = `
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 99999;
+      backdrop-filter: blur(4px);
+    `;
 
-async function connectWallet() {
+    const walletOptions = detectedProviders.length > 0
+      ? detectedProviders.map(p => `
+          <button onclick="connectWithProvider('${p.info.uuid}')" style="
+            width: 100%;
+            background: #0f0f1a;
+            border: 1px solid #2a2a4a;
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.2s;
+            margin-bottom: 12px;
+            text-align: left;
+          " onmouseover="this.style.borderColor='#00D4AA'" onmouseout="this.style.borderColor='#2a2a4a'">
+            <img src="${p.info.icon}" width="32" height="32" style="border-radius:8px;" onerror="this.style.display='none'"/>
+            <span>${p.info.name}</span>
+          </button>
+        `).join('')
+      : window.ethereum
+        ? `<button onclick="connectWithEthereum()" style="
+            width: 100%;
+            background: #0f0f1a;
+            border: 1px solid #2a2a4a;
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+          " onmouseover="this.style.borderColor='#00D4AA'" onmouseout="this.style.borderColor='#2a2a4a'">
+            🦊 <span>Browser Wallet</span>
+          </button>`
+        : `<p style="color:#888; text-align:center; padding:20px;">No wallet found. Please install MetaMask.</p>`;
+
+    modal.innerHTML = `
+      <div style="
+        background: #1a1a2e;
+        border: 1px solid #2a2a4a;
+        border-radius: 20px;
+        padding: 32px;
+        width: 100%;
+        max-width: 400px;
+        margin: 20px;
+      ">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <h2 style="font-size:20px; font-weight:700; color:white; margin:0;">Connect Wallet</h2>
+          <button onclick="document.getElementById('walletModal').remove()" style="
+            background:none; border:none; color:#888;
+            cursor:pointer; font-size:24px; line-height:1;
+          ">×</button>
+        </div>
+        <p style="color:#888; font-size:13px; margin-bottom:20px;">Select your wallet to connect to ArcNova</p>
+        ${walletOptions}
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Modal dışına tıklayınca kapat
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.remove();
+    });
+  }, 100);
+}
+
+async function connectWithProvider(uuid) {
+  const walletData = detectedProviders.find(p => p.info.uuid === uuid);
+  if (!walletData) return;
+
   try {
-    // EIP-6963 ile dene
-    if (providers.length > 0) {
-      const metamask = providers.find(p => p.info.name.toLowerCase().includes('metamask')) || providers[0];
-      selectedProvider = metamask.provider;
-      const accounts = await selectedProvider.request({ method: 'eth_requestAccounts' });
-      handleAccounts(accounts);
-      return;
-    }
-
-    // window.ethereum ile dene
-    if (window.ethereum) {
-      selectedProvider = window.ethereum;
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      handleAccounts(accounts);
-      return;
-    }
-
-    alert('MetaMask not found! Please install MetaMask.');
-
+    selectedProvider = walletData.provider;
+    const accounts = await selectedProvider.request({ method: 'eth_requestAccounts' });
+    document.getElementById('walletModal')?.remove();
+    handleAccounts(accounts);
   } catch (err) {
-    console.error('Wallet error:', err);
+    console.error(err);
     if (err.code === 4001) {
-      alert('Connection rejected. Please approve in MetaMask.');
+      alert('Connection rejected. Please approve in your wallet.');
     } else {
       alert('Could not connect: ' + err.message);
     }
   }
+}
+
+async function connectWithEthereum() {
+  try {
+    selectedProvider = window.ethereum;
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    document.getElementById('walletModal')?.remove();
+    handleAccounts(accounts);
+  } catch (err) {
+    console.error(err);
+    alert('Could not connect: ' + err.message);
+  }
+}
+
+function connectWallet() {
+  showWalletModal();
 }
 
 function handleAccounts(accounts) {
@@ -87,14 +186,12 @@ function handleAccounts(accounts) {
     btn.style.color = '#00D4AA';
   }
   localStorage.setItem('walletAddress', address);
-  localStorage.setItem('arcnova-provider', 'connected');
   showToast('Wallet connected! ✅');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
 
-  // EIP-6963 provider iste
   window.dispatchEvent(new Event('eip6963:requestProvider'));
 
   const walletBtn = document.getElementById('connectWallet');
