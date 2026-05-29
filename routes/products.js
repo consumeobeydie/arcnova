@@ -32,7 +32,7 @@ const products = [
   },
   {
     id: 4,
-    name: "Portable Bluetooth Speaker",
+    name: "Portable Speaker",
     price: 0.003,
     category: "Technology",
     image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
@@ -41,11 +41,11 @@ const products = [
   },
   {
     id: 5,
-    name: "4K Webcam",
+    name: "Wireless Mouse",
     price: 0.002,
     category: "Technology",
-    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=400&fit=crop",
-    description: "Ultra HD 4K webcam with built-in microphone and auto-focus.",
+    image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop",
+    description: "Ergonomic wireless mouse with silent click and long battery life.",
     stock: 10
   },
 
@@ -82,7 +82,7 @@ const products = [
     name: "Wool Blazer",
     price: 0.005,
     category: "Clothing",
-    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4b9c0d?w=400&h=400&fit=crop",
     description: "Elegant wool blend blazer for a sharp professional look.",
     stock: 15
   },
@@ -91,7 +91,7 @@ const products = [
     name: "Linen Summer Dress",
     price: 0.003,
     category: "Clothing",
-    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=400&fit=crop",
     description: "Lightweight linen dress perfect for warm summer days.",
     stock: 18
   },
@@ -111,7 +111,7 @@ const products = [
     name: "Running Shoes",
     price: 0.005,
     category: "Shoes",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=400&fit=crop",
     description: "Lightweight running shoes with advanced cushioning technology.",
     stock: 15
   },
@@ -135,11 +135,11 @@ const products = [
   },
   {
     id: 15,
-    name: "High-Top Basketball Shoes",
+    name: "High-Top Sneakers",
     price: 0.004,
     category: "Shoes",
-    image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=400&fit=crop",
-    description: "High-top basketball shoes with ankle support and grip sole.",
+    image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&h=400&fit=crop",
+    description: "Stylish high-top sneakers with ankle support.",
     stock: 8
   },
 
@@ -193,11 +193,11 @@ const products = [
   // TOYS
   {
     id: 21,
-    name: "LEGO Architecture Set",
+    name: "LEGO City Set",
     price: 0.004,
     category: "Toys",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
-    description: "Creative LEGO architecture set for ages 12+.",
+    image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&h=400&fit=crop",
+    description: "Creative LEGO city set for ages 6+.",
     stock: 20
   },
   {
@@ -205,7 +205,7 @@ const products = [
     name: "Remote Control Car",
     price: 0.003,
     category: "Toys",
-    image: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=400&fit=crop",
     description: "High-speed remote control car with 4WD and LED lights.",
     stock: 15
   },
@@ -232,7 +232,7 @@ const products = [
     name: "Science Experiment Kit",
     price: 0.003,
     category: "Toys",
-    image: "https://images.unsplash.com/photo-1532094349884-543559059a4f?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=400&h=400&fit=crop",
     description: "Fun science experiment kit for curious kids aged 8+.",
     stock: 18
   },
@@ -243,7 +243,7 @@ const products = [
     name: "The Psychology of Money",
     price: 0.001,
     category: "Books",
-    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1554188248-986adbb73be4?w=400&h=400&fit=crop",
     description: "Timeless lessons on wealth, greed, and happiness.",
     stock: 30
   },
@@ -252,7 +252,7 @@ const products = [
     name: "Atomic Habits",
     price: 0.001,
     category: "Books",
-    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop",
     description: "An easy and proven way to build good habits and break bad ones.",
     stock: 25
   },
@@ -261,7 +261,7 @@ const products = [
     name: "Web3 Developer Guide",
     price: 0.002,
     category: "Books",
-    image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop",
     description: "Complete guide to building decentralized applications.",
     stock: 20
   },
@@ -270,7 +270,7 @@ const products = [
     name: "The Future of Finance",
     price: 0.002,
     category: "Books",
-    image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=400&fit=crop",
     description: "How blockchain and stablecoins are reshaping global finance.",
     stock: 15
   },
@@ -279,7 +279,7 @@ const products = [
     name: "Design Thinking",
     price: 0.001,
     category: "Books",
-    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
     description: "A guide to creative problem solving and innovation.",
     stock: 20
   },
@@ -317,7 +317,7 @@ const products = [
     name: "Linen Throw Pillow",
     price: 0.002,
     category: "Home & Living",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1579656592043-a20e25a4aa4b?w=400&h=400&fit=crop",
     description: "Soft linen throw pillow with natural texture, 45x45cm.",
     stock: 25
   },
@@ -364,7 +364,7 @@ const products = [
     name: "Rose Water Toner",
     price: 0.002,
     category: "Cosmetics",
-    image: "https://images.unsplash.com/photo-1601049541271-f4f5e33e3f0c?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&h=400&fit=crop",
     description: "Pure rose water facial toner for hydration and pore tightening.",
     stock: 30
   },
