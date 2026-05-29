@@ -73,7 +73,7 @@ const products = [
     name: "Oversized Hoodie",
     price: 0.003,
     category: "Clothing",
-    image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=400&fit=crop&auto=format",
     description: "Cozy oversized hoodie made from 100% organic cotton.",
     stock: 20
   },
@@ -167,7 +167,7 @@ const products = [
     name: "Silver Bangle Bracelet",
     price: 0.002,
     category: "Jewelry",
-    image: "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=400&fit=crop&auto=format",
     description: "Sterling silver bangle bracelet with engraved pattern.",
     stock: 15
   },
@@ -299,7 +299,7 @@ const products = [
     name: "Scented Soy Candle",
     price: 0.001,
     category: "Home & Living",
-    image: "https://images.unsplash.com/photo-1602178506450-3b8c66fd4699?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&h=400&fit=crop&auto=format",
     description: "Hand-poured soy wax candle with lavender and vanilla scent.",
     stock: 35
   },
@@ -355,7 +355,7 @@ const products = [
     name: "Natural Lip Balm Set",
     price: 0.001,
     category: "Cosmetics",
-    image: "https://images.unsplash.com/photo-1586495777744-4e6232bf0e9f?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&h=400&fit=crop&auto=format",
     description: "Set of 5 natural lip balms in berry, vanilla and mint flavors.",
     stock: 40
   },
