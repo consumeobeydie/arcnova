@@ -49,15 +49,74 @@
 
     <!-- FİLTRELER -->
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+
       <button class="filter-btn active" onclick="filterProducts('All')">All</button>
-      <button class="filter-btn" onclick="filterProducts('Technology')">💻 Technology</button>
-      <button class="filter-btn" onclick="filterProducts('Clothing')">👕 Clothing</button>
-      <button class="filter-btn" onclick="filterProducts('Shoes')">👟 Shoes</button>
-      <button class="filter-btn" onclick="filterProducts('Jewelry')">💎 Jewelry</button>
-      <button class="filter-btn" onclick="filterProducts('Toys')">🧸 Toys</button>
-      <button class="filter-btn" onclick="filterProducts('Books')">📚 Books</button>
-      <button class="filter-btn" onclick="filterProducts('Home & Living')">🏠 Home & Living</button>
-      <button class="filter-btn" onclick="filterProducts('Cosmetics')">💄 Cosmetics</button>
+
+      <button class="filter-btn" onclick="filterProducts('Technology')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <rect x="10" y="15" width="80" height="55" rx="6" stroke="currentColor" stroke-width="6" fill="none"/>
+          <polyline points="25,52 35,38 45,46 55,30 65,42 75,35" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        Technology
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Clothing')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <path d="M35 15 L20 30 L30 35 L30 80 L70 80 L70 35 L80 30 L65 15 C65 15 60 25 50 25 C40 25 35 15 35 15Z" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill="none"/>
+        </svg>
+        Clothing
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Shoes')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <path d="M10 65 C10 65 15 45 30 40 C40 37 45 42 55 40 C65 38 75 30 82 32 C89 34 90 42 88 48 C86 54 80 58 70 60 L20 72 C15 73 10 70 10 65Z" stroke="currentColor" stroke-width="6" fill="none"/>
+        </svg>
+        Shoes
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Jewelry')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <polygon points="50,15 62,38 88,42 69,60 74,86 50,74 26,86 31,60 12,42 38,38" stroke="currentColor" stroke-width="6" fill="none" stroke-linejoin="round"/>
+        </svg>
+        Jewelry
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Toys')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <rect x="25" y="35" width="50" height="40" rx="8" stroke="currentColor" stroke-width="6" fill="none"/>
+          <rect x="35" y="25" width="12" height="14" rx="4" stroke="currentColor" stroke-width="5" fill="none"/>
+          <rect x="53" y="25" width="12" height="14" rx="4" stroke="currentColor" stroke-width="5" fill="none"/>
+        </svg>
+        Toys
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Books')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <rect x="20" y="15" width="45" height="70" rx="4" stroke="currentColor" stroke-width="6" fill="none"/>
+          <line x1="38" y1="32" x2="57" y2="32" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+          <line x1="38" y1="42" x2="57" y2="42" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+          <line x1="38" y1="52" x2="57" y2="52" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        Books
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Home & Living')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <path d="M50 15 L85 45 L75 45 L75 82 L25 82 L25 45 L15 45 Z" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill="none"/>
+          <rect x="40" y="58" width="20" height="24" rx="2" stroke="currentColor" stroke-width="5" fill="none"/>
+        </svg>
+        Home & Living
+      </button>
+
+      <button class="filter-btn" onclick="filterProducts('Cosmetics')">
+        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
+          <rect x="38" y="10" width="24" height="35" rx="6" stroke="currentColor" stroke-width="6" fill="none"/>
+          <rect x="30" y="45" width="40" height="40" rx="8" stroke="currentColor" stroke-width="6" fill="none"/>
+          <circle cx="50" cy="65" r="8" stroke="currentColor" stroke-width="5" fill="none"/>
+        </svg>
+        Cosmetics
+      </button>
+
     </div>
 
     <!-- ARAMA -->
@@ -111,14 +170,13 @@
       const res = await fetch('/api/products');
       allProducts = await res.json();
 
-      // URL'den kategori parametresi oku
       const params = new URLSearchParams(window.location.search);
       const urlCategory = params.get('category');
       if (urlCategory) {
         activeCategory = urlCategory;
         document.querySelectorAll('.filter-btn').forEach(btn => {
-          const btnText = btn.textContent.replace(/💻|👕|👟|💎|🧸|📚|🏠|💄/g, '').trim();
-          btn.classList.toggle('active', btnText === urlCategory);
+          const text = btn.textContent.trim();
+          btn.classList.toggle('active', text === urlCategory);
         });
       }
 
@@ -128,7 +186,6 @@
     function renderProducts(products) {
       const grid = document.getElementById('productsGrid');
       const count = document.getElementById('productCount');
-
       count.textContent = `${products.length} products found`;
 
       if (products.length === 0) {
@@ -154,8 +211,7 @@
     function filterProducts(category) {
       activeCategory = category;
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        const btnText = btn.textContent.replace(/💻|👕|👟|💎|🧸|📚|🏠|💄/g, '').trim();
-        btn.classList.toggle('active', btnText === category || btn.textContent === category);
+        btn.classList.toggle('active', btn.textContent.trim() === category);
       });
       applyFilters();
     }
