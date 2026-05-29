@@ -15,15 +15,15 @@
           <defs>
             <radialGradient id="sg" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#ffffff"/>
-              <stop offset="100%" stop-color="#00D4AA"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
             </radialGradient>
           </defs>
           <polygon points="50,4 53,46 50,50 47,46" fill="url(#sg)"/>
           <polygon points="50,96 53,54 50,50 47,54" fill="url(#sg)"/>
           <polygon points="96,50 54,53 50,50 54,47" fill="url(#sg)"/>
           <polygon points="4,50 46,53 50,50 46,47" fill="url(#sg)"/>
-          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4AA" opacity="0.8"/>
-          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4AA" opacity="0.8"/>
+          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4FF" opacity="0.8"/>
+          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4FF" opacity="0.8"/>
           <polygon points="22,22 48,48 50,50 52,46" fill="#7B2FBE" opacity="0.8"/>
           <polygon points="78,78 52,52 50,50 48,54" fill="#7B2FBE" opacity="0.8"/>
           <circle cx="50" cy="50" r="4" fill="white"/>
@@ -44,37 +44,51 @@
   </nav>
 
   <section style="padding: 120px 24px 80px; max-width: 1200px; margin: 0 auto;">
-    <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px;">All Products</h1>
-    <p style="color: #888; margin-bottom: 40px;">Pay with USDC on Arc Network</p>
+    <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px; letter-spacing:-1px;">All Products</h1>
+    <p style="color: #7a7a9a; margin-bottom: 40px; letter-spacing:1px; font-size:13px; text-transform:uppercase;">Pay with USDC on Arc Network</p>
 
-    <div class="filters" id="filters" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px;">
+    <!-- FİLTRELER -->
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
       <button class="filter-btn active" onclick="filterProducts('All')">All</button>
+      <button class="filter-btn" onclick="filterProducts('Technology')">Technology</button>
       <button class="filter-btn" onclick="filterProducts('Clothing')">Clothing</button>
       <button class="filter-btn" onclick="filterProducts('Shoes')">Shoes</button>
-      <button class="filter-btn" onclick="filterProducts('Accessories')">Accessories</button>
-      <button class="filter-btn" onclick="filterProducts('Bags')">Bags</button>
+      <button class="filter-btn" onclick="filterProducts('Jewelry')">Jewelry</button>
+      <button class="filter-btn" onclick="filterProducts('Toys')">Toys</button>
+      <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
+      <button class="filter-btn" onclick="filterProducts('Home & Living')">Home & Living</button>
+      <button class="filter-btn" onclick="filterProducts('Cosmetics')">Cosmetics</button>
     </div>
 
+    <!-- ARAMA -->
     <div style="margin-bottom:32px;">
       <input
         type="text"
         id="searchInput"
         placeholder="🔍 Search products..."
         style="
-          background: #1a1a2e;
-          border: 1px solid #2a2a4a;
+          background: #0d0d24;
+          border: 1px solid #1a1a3a;
           color: white;
           padding: 12px 20px;
-          border-radius: 10px;
+          border-radius: 6px;
           font-size: 14px;
           width: 100%;
           max-width: 400px;
           outline: none;
+          letter-spacing: 0.5px;
+          transition: border-color 0.2s;
         "
+        onfocus="this.style.borderColor='#00D4FF'"
+        onblur="this.style.borderColor='#1a1a3a'"
         oninput="searchProducts(this.value)"
       />
     </div>
 
+    <!-- ÜRÜN SAYISI -->
+    <div id="productCount" style="color:#7a7a9a; font-size:13px; letter-spacing:1px; margin-bottom:24px;"></div>
+
+    <!-- ÜRÜN LİSTESİ -->
     <div class="products-grid" id="productsGrid"></div>
   </section>
 
@@ -87,25 +101,6 @@
       <p class="footer-copy">© 2026 ArcNova. Powered by Arc Network.</p>
     </div>
   </footer>
-
-  <style>
-    .filter-btn {
-      background: #1a1a2e;
-      border: 1px solid #2a2a4a;
-      color: #888;
-      padding: 8px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: all 0.2s;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      background: #00D4AA;
-      border-color: #00D4AA;
-      color: #000;
-      font-weight: 600;
-    }
-  </style>
 
   <script src="/js/main.js"></script>
   <script>
@@ -120,10 +115,15 @@
 
     function renderProducts(products) {
       const grid = document.getElementById('productsGrid');
+      const count = document.getElementById('productCount');
+
+      count.textContent = `${products.length} products found`;
+
       if (products.length === 0) {
-        grid.innerHTML = '<p style="color:#888; text-align:center; grid-column:1/-1;">No products found.</p>';
+        grid.innerHTML = '<p style="color:#7a7a9a; text-align:center; grid-column:1/-1; padding:60px 0;">No products found.</p>';
         return;
       }
+
       grid.innerHTML = products.map(p => `
         <div class="product-card" onclick="window.location.href='/product.html?id=${p.id}'">
           <img src="${p.image}" alt="${p.name}">
@@ -142,4 +142,29 @@
     function filterProducts(category) {
       activeCategory = category;
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggl
+        btn.classList.toggle('active', btn.textContent === category);
+      });
+      applyFilters();
+    }
+
+    function searchProducts(query) {
+      applyFilters(query);
+    }
+
+    function applyFilters(query = document.getElementById('searchInput').value) {
+      let filtered = allProducts;
+      if (activeCategory !== 'All') {
+        filtered = filtered.filter(p => p.category === activeCategory);
+      }
+      if (query) {
+        filtered = filtered.filter(p =>
+          p.name.toLowerCase().includes(query.toLowerCase())
+        );
+      }
+      renderProducts(filtered);
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
