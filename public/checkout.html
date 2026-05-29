@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ArcNova — Checkout</title>
   <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 </head>
 <body>
 
@@ -53,12 +54,12 @@
 
     <!-- ADIM GÖSTERGESİ -->
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:40px;">
-      <div id="step1indicator" style="display:flex; align-items:center; gap:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
         <div style="width:28px; height:28px; border-radius:50%; background:#00D4AA; color:#000; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">1</div>
         <span style="font-size:14px; color:#00D4AA; font-weight:600;">Review</span>
       </div>
       <div style="flex:1; height:1px; background:#2a2a4a;"></div>
-      <div id="step2indicator" style="display:flex; align-items:center; gap:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
         <div id="step2circle" style="width:28px; height:28px; border-radius:50%; background:#2a2a4a; color:#888; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">2</div>
         <span id="step2text" style="font-size:14px; color:#888; font-weight:600;">Payment</span>
       </div>
@@ -103,7 +104,7 @@
           </div>
           <div style="grid-column:1/-1;">
             <label style="color:#888; font-size:12px; display:block; margin-bottom:6px;">ADDRESS</label>
-            <input id="address" type="text" placeholder="123 Main St, City, Country" style="width:100%; background:#0f0f1a; border:1px solid #2a2a4a; color:white; padding:10px 14px; border-radius:8px; font-size:14px; outline:none;"/>
+            <input id="shippingAddress" type="text" placeholder="123 Main St, City, Country" style="width:100%; background:#0f0f1a; border:1px solid #2a2a4a; color:white; padding:10px 14px; border-radius:8px; font-size:14px; outline:none;"/>
           </div>
         </div>
       </div>
@@ -124,7 +125,7 @@
       <div style="background:#1a1a2e; border:1px solid #2a2a4a; border-radius:16px; padding:32px; margin-bottom:24px; text-align:center;">
         <div style="font-size:48px; margin-bottom:16px;">💳</div>
         <h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">Pay with USDC</h2>
-        <p style="color:#888; margin-bottom:32px; font-size:14px;">Your payment will be recorded on the Arc Network blockchain</p>
+        <p style="color:#888; margin-bottom:32px; font-size:14px;">MetaMask will ask you to confirm the transaction</p>
 
         <div style="background:#0f0f1a; border:1px solid #2a2a4a; border-radius:12px; padding:20px; margin-bottom:24px; text-align:left;">
           <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px;">
@@ -142,8 +143,10 @@
         </div>
 
         <div id="paymentStatus" style="display:none; background:rgba(0,212,170,0.05); border:1px solid rgba(0,212,170,0.2); border-radius:10px; padding:16px; margin-bottom:24px; font-size:13px; color:#00D4AA;">
-          ⏳ Processing transaction on Arc Network...
+          ⏳ Waiting for MetaMask confirmation...
         </div>
+
+        <div id="errorMsg" style="display:none; background:rgba(255,68,68,0.05); border:1px solid rgba(255,68,68,0.3); border-radius:10px; padding:16px; margin-bottom:24px; font-size:13px; color:#ff4444;"></div>
 
         <button onclick="makePayment()" id="payBtn" style="
           width:100%;
@@ -203,6 +206,17 @@
 
   <script src="/js/main.js"></script>
   <script>
+    // Arc Testnet USDC kontrat adresi
+    const USDC_CONTRACT = '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238';
+    const STORE_WALLET = '0xcAaDa98159b82b80D7940CFb527f7Ab44E650Cc8';
+
+    // USDC ABI (sadece transfer fonksiyonu)
+    const USDC_ABI = [
+      'function transfer(address to, uint256 amount) returns (bool)',
+      'function balanceOf(address owner) view returns (uint256)',
+      'function decimals() view returns (uint8)'
+    ];
+
     function renderCheckout() {
       const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const total = subtotal + 0.001;
@@ -228,7 +242,7 @@
     function goToPayment() {
       const name = document.getElementById('fullName').value;
       const email = document.getElementById('email').value;
-      const address = document.getElementById('address').value;
+      const address = document.getElementById('shippingAddress').value;
 
       if (!name || !email || !address) {
         alert('Please fill in all shipping information!');
@@ -237,7 +251,6 @@
 
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
-
       document.getElementById('step2circle').style.background = '#00D4AA';
       document.getElementById('step2circle').style.color = '#000';
       document.getElementById('step2text').style.color = '#00D4AA';
@@ -252,47 +265,79 @@
 
       const payBtn = document.getElementById('payBtn');
       const statusEl = document.getElementById('paymentStatus');
+      const errorEl = document.getElementById('errorMsg');
 
-      payBtn.disabled = true;
-      payBtn.textContent = '⏳ Processing...';
-      statusEl.style.display = 'block';
+      try {
+        payBtn.disabled = true;
+        payBtn.textContent = '⏳ Waiting for approval...';
+        statusEl.style.display = 'block';
+        errorEl.style.display = 'none';
 
-      // Testnet simülasyonu
-      await new Promise(resolve => setTimeout(resolve, 3000));
+        // Ethers.js ile MetaMask bağlan
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
 
-      const txHash = '0x' + Array.from({length: 64}, () =>
-        Math.floor(Math.random() * 16).toString(16)).join('');
+        // USDC kontratına bağlan
+        const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
 
-      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        // Toplam tutarı hesapla
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const total = subtotal + 0.001;
 
-      // Siparişi kaydet
-      await fetch('/api/payment/order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: cart,
-          totalAmount: (subtotal + 0.001).toFixed(3),
-          buyerAddress: wallet,
-          txHash
-        })
-      });
+        // USDC 6 decimal kullanır
+        const amount = ethers.parseUnits(total.toFixed(6), 6);
 
-      // Sepeti temizle
-      cart = [];
-      localStorage.setItem('arcnova-cart', JSON.stringify(cart));
-      updateCartCount();
+        // MetaMask onay penceresi açılacak
+        statusEl.textContent = '⏳ Please confirm the transaction in MetaMask...';
+        const tx = await usdcContract.transfer(STORE_WALLET, amount);
 
-      // Adım 3'e geç
-      document.getElementById('step2').style.display = 'none';
-      document.getElementById('step3').style.display = 'block';
-      document.getElementById('step3circle').style.background = '#00D4AA';
-      document.getElementById('step3circle').style.color = '#000';
-      document.getElementById('step3text').style.color = '#00D4AA';
+        statusEl.textContent = '⏳ Transaction submitted, waiting for confirmation...';
+        const receipt = await tx.wait();
 
-      document.getElementById('txHashDisplay').textContent = txHash;
-      document.getElementById('arcScanLink').href = `https://testnet.arcscan.app/tx/${txHash}`;
+        const txHash = receipt.hash;
 
-      showToast('Payment confirmed on blockchain! 🎉');
+        // Siparişi kaydet
+        await fetch('/api/payment/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: cart,
+            totalAmount: total.toFixed(3),
+            buyerAddress: wallet,
+            txHash
+          })
+        });
+
+        // Sepeti temizle
+        cart = [];
+        localStorage.setItem('arcnova-cart', JSON.stringify(cart));
+        updateCartCount();
+
+        // Adım 3
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'block';
+        document.getElementById('step3circle').style.background = '#00D4AA';
+        document.getElementById('step3circle').style.color = '#000';
+        document.getElementById('step3text').style.color = '#00D4AA';
+
+        document.getElementById('txHashDisplay').textContent = txHash;
+        document.getElementById('arcScanLink').href = `https://testnet.arcscan.app/tx/${txHash}`;
+
+        showToast('Payment confirmed on blockchain! 🎉');
+
+      } catch (err) {
+        console.error(err);
+        payBtn.disabled = false;
+        payBtn.textContent = '🔗 Pay with MetaMask';
+        statusEl.style.display = 'none';
+
+        if (err.code === 4001) {
+          errorEl.textContent = '❌ Transaction rejected. Please try again.';
+        } else {
+          errorEl.textContent = '❌ Error: ' + (err.reason || err.message);
+        }
+        errorEl.style.display = 'block';
+      }
     }
 
     renderCheckout();
