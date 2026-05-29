@@ -16,15 +16,15 @@
           <defs>
             <radialGradient id="sg" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#ffffff"/>
-              <stop offset="100%" stop-color="#00D4AA"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
             </radialGradient>
           </defs>
           <polygon points="50,4 53,46 50,50 47,46" fill="url(#sg)"/>
           <polygon points="50,96 53,54 50,50 47,54" fill="url(#sg)"/>
           <polygon points="96,50 54,53 50,50 54,47" fill="url(#sg)"/>
           <polygon points="4,50 46,53 50,50 46,47" fill="url(#sg)"/>
-          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4AA" opacity="0.8"/>
-          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4AA" opacity="0.8"/>
+          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4FF" opacity="0.8"/>
+          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4FF" opacity="0.8"/>
           <polygon points="22,22 48,48 50,50 52,46" fill="#7B2FBE" opacity="0.8"/>
           <polygon points="78,78 52,52 50,50 48,54" fill="#7B2FBE" opacity="0.8"/>
           <circle cx="50" cy="50" r="4" fill="white"/>
@@ -56,32 +56,81 @@
       </div>
     </div>
     <div class="hero-visual">
-      <div class="hero-star">
-        <svg width="300" height="300" viewBox="0 0 100 100">
-          <defs>
-            <radialGradient id="heroGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
-              <stop offset="40%" stop-color="#00D4AA" stop-opacity="0.6"/>
-              <stop offset="100%" stop-color="#7B2FBE" stop-opacity="0"/>
-            </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <circle cx="50" cy="50" r="45" fill="url(#heroGlow)" opacity="0.2"/>
-          <polygon points="50,2 54,46 50,50 46,46" fill="white" filter="url(#glow)"/>
-          <polygon points="50,98 54,54 50,50 46,54" fill="white" filter="url(#glow)"/>
-          <polygon points="2,50 46,54 50,50 46,46" fill="white" filter="url(#glow)"/>
-          <polygon points="98,50 54,54 50,50 54,46" fill="white" filter="url(#glow)"/>
-          <polygon points="80,20 53,47 50,50 47,46" fill="#00D4AA" filter="url(#glow)"/>
-          <polygon points="20,80 47,53 50,50 53,54" fill="#00D4AA" filter="url(#glow)"/>
-          <polygon points="20,20 47,47 50,50 53,46" fill="#7B2FBE" filter="url(#glow)"/>
-          <polygon points="80,80 53,53 50,50 47,54" fill="#7B2FBE" filter="url(#glow)"/>
-          <circle cx="50" cy="50" r="6" fill="white"/>
-          <circle cx="50" cy="50" r="20" fill="none" stroke="#00D4AA" stroke-width="0.5" opacity="0.4"/>
-          <circle cx="50" cy="50" r="32" fill="none" stroke="#7B2FBE" stroke-width="0.5" opacity="0.3"/>
-        </svg>
+      <svg width="300" height="300" viewBox="0 0 100 100">
+        <defs>
+          <radialGradient id="heroGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#00D4FF" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#7B2FBE" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="url(#heroGlow)" opacity="0.2"/>
+        <polygon points="50,2 54,46 50,50 46,46" fill="white" filter="url(#glow)"/>
+        <polygon points="50,98 54,54 50,50 46,54" fill="white" filter="url(#glow)"/>
+        <polygon points="2,50 46,54 50,50 46,46" fill="white" filter="url(#glow)"/>
+        <polygon points="98,50 54,54 50,50 54,46" fill="white" filter="url(#glow)"/>
+        <polygon points="80,20 53,47 50,50 47,46" fill="#00D4FF" filter="url(#glow)"/>
+        <polygon points="20,80 47,53 50,50 53,54" fill="#00D4FF" filter="url(#glow)"/>
+        <polygon points="20,20 47,47 50,50 53,46" fill="#7B2FBE" filter="url(#glow)"/>
+        <polygon points="80,80 53,53 50,50 47,54" fill="#7B2FBE" filter="url(#glow)"/>
+        <circle cx="50" cy="50" r="6" fill="white"/>
+        <circle cx="50" cy="50" r="20" fill="none" stroke="#00D4FF" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="50" cy="50" r="32" fill="none" stroke="#7B2FBE" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- KATEGORİLER -->
+  <section style="padding: 40px 24px 80px; max-width: 1200px; margin: 0 auto;">
+    <div class="section-container">
+      <h2>Shop by Category</h2>
+      <p class="section-subtitle">Browse our wide selection of products</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px;">
+        
+        <a href="/products.html?category=Technology" class="category-card">
+          <div class="category-icon">💻</div>
+          <div class="category-name">Technology</div>
+        </a>
+
+        <a href="/products.html?category=Clothing" class="category-card">
+          <div class="category-icon">👕</div>
+          <div class="category-name">Clothing</div>
+        </a>
+
+        <a href="/products.html?category=Shoes" class="category-card">
+          <div class="category-icon">👟</div>
+          <div class="category-name">Shoes</div>
+        </a>
+
+        <a href="/products.html?category=Jewelry" class="category-card">
+          <div class="category-icon">💎</div>
+          <div class="category-name">Jewelry</div>
+        </a>
+
+        <a href="/products.html?category=Toys" class="category-card">
+          <div class="category-icon">🧸</div>
+          <div class="category-name">Toys</div>
+        </a>
+
+        <a href="/products.html?category=Books" class="category-card">
+          <div class="category-icon">📚</div>
+          <div class="category-name">Books</div>
+        </a>
+
+        <a href="/products.html?category=Home%20%26%20Living" class="category-card">
+          <div class="category-icon">🏠</div>
+          <div class="category-name">Home & Living</div>
+        </a>
+
+        <a href="/products.html?category=Cosmetics" class="category-card">
+          <div class="category-icon">💄</div>
+          <div class="category-name">Cosmetics</div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -90,6 +139,7 @@
   <section class="featured">
     <div class="section-container">
       <h2>Featured Products</h2>
+      <p class="section-subtitle">Handpicked for you</p>
       <div class="products-grid" id="featuredProducts"></div>
       <div class="view-all">
         <a href="/products.html" class="btn-primary">View All Products</a>
@@ -101,6 +151,7 @@
   <section class="features">
     <div class="section-container">
       <h2>Why ArcNova?</h2>
+      <p class="section-subtitle">The future of shopping is here</p>
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">🔗</div>
@@ -135,6 +186,38 @@
       <p class="footer-copy">© 2026 ArcNova. Powered by Arc Network.</p>
     </div>
   </footer>
+
+  <style>
+    .category-card {
+      background: #0d0d24;
+      border: 1px solid #1a1a3a;
+      border-radius: 12px;
+      padding: 24px 12px;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .category-card:hover {
+      border-color: #00D4FF;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,212,255,0.15);
+    }
+    .category-icon { font-size: 36px; }
+    .category-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #7a7a9a;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .category-card:hover .category-name { color: #00D4FF; }
+  </style>
 
   <script src="/js/main.js"></script>
 </body>
