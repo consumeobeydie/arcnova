@@ -9,14 +9,14 @@
     .category-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-top: 40px;
+      gap: 16px;
+      margin-top: 24px;
     }
     .category-card {
       background: #0d0d24;
       border: 1px solid #1a1a3a;
-      border-radius: 24px;
-      padding: 40px 20px 28px;
+      border-radius: 16px;
+      padding: 24px 12px;
       text-align: center;
       text-decoration: none;
       transition: all 0.3s;
@@ -24,7 +24,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      gap: 12px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
@@ -40,33 +40,33 @@
     }
     .category-card:hover {
       border-color: rgba(0,212,255,0.5);
-      transform: translateY(-8px);
-      box-shadow: 0 24px 60px rgba(0,212,255,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,212,255,0.15);
       background: #0f0f2e;
     }
     .category-card:hover::before { opacity: 1; }
     .category-icon svg {
-      width: 140px;
-      height: 140px;
+      width: 64px;
+      height: 64px;
       transition: transform 0.3s;
-      filter: drop-shadow(0 0 12px rgba(0,212,255,0.2));
+      filter: drop-shadow(0 0 8px rgba(0,212,255,0.2));
     }
     .category-card:hover .category-icon svg {
       transform: scale(1.1);
-      filter: drop-shadow(0 0 24px rgba(0,212,255,0.5));
+      filter: drop-shadow(0 0 16px rgba(0,212,255,0.5));
     }
     .category-name {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: #7a7a9a;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       transition: color 0.2s;
     }
     .category-card:hover .category-name { color: #00D4FF; }
     @media (max-width: 768px) {
       .category-grid { grid-template-columns: repeat(2, 1fr); }
-      .category-icon svg { width: 100px; height: 100px; }
+      .category-icon svg { width: 48px; height: 48px; }
     }
   </style>
 </head>
@@ -75,24 +75,25 @@
   <nav class="navbar">
     <div class="nav-container">
       <div class="nav-logo">
-        <svg width="32" height="32" viewBox="0 0 100 100">
+        <svg width="32" height="32" viewBox="0 0 320 320">
           <defs>
-            <radialGradient id="sg" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff"/>
-              <stop offset="100%" stop-color="#00D4FF"/>
-            </radialGradient>
+            <linearGradient id="navG" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="100%" stop-color="#ffffff"/>
+            </linearGradient>
           </defs>
-          <polygon points="50,4 53,46 50,50 47,46" fill="url(#sg)"/>
-          <polygon points="50,96 53,54 50,50 47,54" fill="url(#sg)"/>
-          <polygon points="96,50 54,53 50,50 54,47" fill="url(#sg)"/>
-          <polygon points="4,50 46,53 50,50 46,47" fill="url(#sg)"/>
-          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4FF" opacity="0.8"/>
-          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4FF" opacity="0.8"/>
-          <polygon points="22,22 48,48 50,50 52,46" fill="#7B2FBE" opacity="0.8"/>
-          <polygon points="78,78 52,52 50,50 48,54" fill="#7B2FBE" opacity="0.8"/>
-          <circle cx="50" cy="50" r="4" fill="white"/>
+          <path d="M85 255 C85 255 85 130 160 68 C235 130 235 255 235 255" fill="none" stroke="url(#navG)" stroke-width="30" stroke-linecap="round"/>
+          <path d="M108 262 C108 262 108 145 160 95 C212 145 212 262 212 262" fill="#080818" stroke="#080818" stroke-width="3"/>
+          <polygon points="160,38 163.5,80 160,86 156.5,80" fill="#ffffff" opacity="0.95"/>
+          <polygon points="160,282 163.5,240 160,234 156.5,240" fill="#00D4FF" opacity="0.75"/>
+          <polygon points="282,160 240,163.5 234,160 240,156.5" fill="#00D4FF" opacity="0.75"/>
+          <polygon points="38,160 80,163.5 86,160 80,156.5" fill="#ffffff" opacity="0.95"/>
+          <polygon points="246,74 218,104 213,99 217,95" fill="#7B2FBE" opacity="0.85"/>
+          <polygon points="74,74 102,102 97,107 93,103" fill="#7B2FBE" opacity="0.85"/>
+          <circle cx="160" cy="160" r="6" fill="#ffffff" opacity="0.95"/>
+          <circle cx="160" cy="160" r="3.5" fill="#00D4FF"/>
         </svg>
-        <span>ARCNOVA</span>
+        <span>ArcNova</span>
       </div>
       <div class="nav-links">
         <a href="/">Home</a>
@@ -107,19 +108,23 @@
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
+  <!-- HERO — kompakt -->
+  <section style="padding: 90px 24px 20px; max-width: 1200px; margin: 0 auto; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+    <div>
       <div class="hero-badge">⚡ Live on Arc Testnet</div>
-      <h1>The Future of<br><span class="gradient-text">Shopping</span><br>is Here</h1>
-      <p>Pay with USDC, every transaction recorded on-chain. Transparent, secure, and fast.</p>
-      <div class="hero-buttons">
+      <h1 style="font-size:42px; font-weight:800; line-height:1.1; margin:12px 0 12px; letter-spacing:-1px;">
+        The Future of<br><span class="gradient-text">Shopping</span> is Here
+      </h1>
+      <p style="color:#7a7a9a; font-size:15px; line-height:1.6; max-width:480px; margin-bottom:20px;">
+        Pay with USDC, every transaction recorded on-chain. Transparent, secure, and fast.
+      </p>
+      <div style="display:flex; gap:12px;">
         <a href="/products.html" class="btn-primary">Start Shopping</a>
         <a href="https://testnet.arcscan.app" target="_blank" class="btn-secondary">View on ArcScan</a>
       </div>
     </div>
-    <div class="hero-visual">
-      <svg width="300" height="300" viewBox="0 0 100 100">
+    <div style="flex-shrink:0; animation: float 4s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(0,212,255,0.3));">
+      <svg width="180" height="180" viewBox="0 0 100 100">
         <defs>
           <radialGradient id="heroGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
@@ -147,34 +152,29 @@
     </div>
   </section>
 
-  <!-- KATEGORİLER -->
-  <section style="padding: 40px 24px 80px; max-width: 1400px; margin: 0 auto;">
-    <h2 style="text-align:center; font-size:36px; font-weight:800; margin-bottom:8px;">Shop by Category</h2>
-    <p class="section-subtitle">Browse our wide selection of products</p>
+  <!-- KATEGORİLER — hemen hero altında -->
+  <section style="padding: 0 24px 40px; max-width: 1200px; margin: 0 auto;">
+    <h2 style="font-size:22px; font-weight:700; margin-bottom:4px;">Shop by Category</h2>
+    <p style="color:#7a7a9a; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-bottom:0;">Browse our wide selection</p>
     <div class="category-grid">
 
-      <!-- Technology -->
       <a href="/products.html?category=Technology" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <rect x="10" y="15" width="80" height="55" rx="6" stroke="#00D4FF" stroke-width="4" fill="none"/>
-            <rect x="25" y="70" width="50" height="6" rx="2" fill="#00D4FF" opacity="0.5"/>
-            <rect x="35" y="76" width="30" height="4" rx="2" fill="#00D4FF" opacity="0.3"/>
             <rect x="18" y="23" width="64" height="39" rx="3" fill="#7B2FBE" opacity="0.2"/>
             <polyline points="25,52 35,38 45,46 55,30 65,42 75,35" stroke="#00D4FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             <circle cx="55" cy="30" r="3" fill="#00D4FF"/>
+            <rect x="25" y="70" width="50" height="6" rx="2" fill="#00D4FF" opacity="0.5"/>
           </svg>
         </div>
         <span class="category-name">Technology</span>
       </a>
 
-      <!-- Clothing -->
       <a href="/products.html?category=Clothing" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <path d="M35 15 L20 30 L30 35 L30 80 L70 80 L70 35 L80 30 L65 15 C65 15 60 25 50 25 C40 25 35 15 35 15Z" stroke="#00D4FF" stroke-width="4" stroke-linejoin="round" fill="#7B2FBE" fill-opacity="0.2"/>
-            <path d="M35 15 L20 30 L30 35" stroke="#00D4FF" stroke-width="4" stroke-linejoin="round" fill="none"/>
-            <path d="M65 15 L80 30 L70 35" stroke="#00D4FF" stroke-width="4" stroke-linejoin="round" fill="none"/>
             <line x1="30" y1="50" x2="70" y2="50" stroke="#00D4FF" stroke-width="2" opacity="0.4"/>
             <line x1="30" y1="62" x2="70" y2="62" stroke="#00D4FF" stroke-width="2" opacity="0.4"/>
           </svg>
@@ -182,27 +182,22 @@
         <span class="category-name">Clothing</span>
       </a>
 
-      <!-- Shoes -->
       <a href="/products.html?category=Shoes" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <path d="M10 65 C10 65 15 45 30 40 C40 37 45 42 55 40 C65 38 75 30 82 32 C89 34 90 42 88 48 C86 54 80 58 70 60 L20 72 C15 73 10 70 10 65Z" stroke="#00D4FF" stroke-width="4" fill="#7B2FBE" fill-opacity="0.2"/>
-            <path d="M20 72 L88 58" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
-            <path d="M30 40 L32 60" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
-            <path d="M45 38 L46 58" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
-            <path d="M60 37 L60 56" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
-            <ellipse cx="49" cy="68" rx="39" ry="6" fill="#00D4FF" opacity="0.15"/>
+            <line x1="30" y1="40" x2="32" y2="60" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
+            <line x1="45" y1="38" x2="46" y2="58" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
+            <line x1="60" y1="37" x2="60" y2="56" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
           </svg>
         </div>
         <span class="category-name">Shoes</span>
       </a>
 
-      <!-- Jewelry -->
       <a href="/products.html?category=Jewelry" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <polygon points="50,15 62,38 88,42 69,60 74,86 50,74 26,86 31,60 12,42 38,38" stroke="#00D4FF" stroke-width="3" fill="#7B2FBE" fill-opacity="0.2" stroke-linejoin="round"/>
-            <polygon points="50,28 57,42 73,44 62,55 65,71 50,63 35,71 38,55 27,44 43,42" stroke="#00D4FF" stroke-width="1.5" fill="#00D4FF" fill-opacity="0.1" stroke-linejoin="round"/>
             <circle cx="50" cy="50" r="8" fill="#00D4FF" opacity="0.6"/>
             <circle cx="50" cy="50" r="4" fill="white"/>
           </svg>
@@ -210,68 +205,54 @@
         <span class="category-name">Jewelry</span>
       </a>
 
-      <!-- Toys -->
       <a href="/products.html?category=Toys" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <rect x="25" y="35" width="50" height="40" rx="8" stroke="#00D4FF" stroke-width="4" fill="#7B2FBE" fill-opacity="0.2"/>
             <rect x="35" y="25" width="12" height="14" rx="4" stroke="#00D4FF" stroke-width="3" fill="none"/>
             <rect x="53" y="25" width="12" height="14" rx="4" stroke="#00D4FF" stroke-width="3" fill="none"/>
             <circle cx="38" cy="55" r="6" stroke="#00D4FF" stroke-width="3" fill="#00D4FF" fill-opacity="0.2"/>
             <circle cx="62" cy="55" r="6" stroke="#00D4FF" stroke-width="3" fill="#00D4FF" fill-opacity="0.2"/>
             <rect x="44" y="50" width="12" height="10" rx="2" fill="#00D4FF" opacity="0.4"/>
-            <line x1="15" y1="50" x2="25" y2="50" stroke="#00D4FF" stroke-width="4" stroke-linecap="round"/>
-            <line x1="75" y1="50" x2="85" y2="50" stroke="#00D4FF" stroke-width="4" stroke-linecap="round"/>
           </svg>
         </div>
         <span class="category-name">Toys</span>
       </a>
 
-      <!-- Books -->
       <a href="/products.html?category=Books" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <rect x="20" y="15" width="45" height="70" rx="4" stroke="#00D4FF" stroke-width="4" fill="#7B2FBE" fill-opacity="0.2"/>
             <rect x="25" y="15" width="8" height="70" fill="#00D4FF" opacity="0.15"/>
             <line x1="38" y1="32" x2="57" y2="32" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
             <line x1="38" y1="42" x2="57" y2="42" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
             <line x1="38" y1="52" x2="57" y2="52" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-            <line x1="38" y1="62" x2="50" y2="62" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
             <rect x="55" y="25" width="25" height="60" rx="4" stroke="#7B2FBE" stroke-width="3" fill="#7B2FBE" fill-opacity="0.15"/>
-            <line x1="62" y1="38" x2="73" y2="38" stroke="#7B2FBE" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-            <line x1="62" y1="48" x2="73" y2="48" stroke="#7B2FBE" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
           </svg>
         </div>
         <span class="category-name">Books</span>
       </a>
 
-      <!-- Home & Living -->
       <a href="/products.html?category=Home%20%26%20Living" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <path d="M50 15 L85 45 L75 45 L75 82 L25 82 L25 45 L15 45 Z" stroke="#00D4FF" stroke-width="4" stroke-linejoin="round" fill="#7B2FBE" fill-opacity="0.2"/>
             <rect x="40" y="58" width="20" height="24" rx="2" stroke="#00D4FF" stroke-width="3" fill="#00D4FF" fill-opacity="0.15"/>
             <rect x="30" y="50" width="16" height="16" rx="2" stroke="#00D4FF" stroke-width="2.5" fill="none"/>
             <rect x="54" y="50" width="16" height="16" rx="2" stroke="#00D4FF" stroke-width="2.5" fill="none"/>
-            <line x1="50" y1="15" x2="50" y2="8" stroke="#00D4FF" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="50" cy="6" r="3" fill="#00D4FF"/>
           </svg>
         </div>
         <span class="category-name">Home & Living</span>
       </a>
 
-      <!-- Cosmetics -->
       <a href="/products.html?category=Cosmetics" class="category-card">
         <div class="category-icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 100 100" fill="none">
             <rect x="38" y="10" width="24" height="35" rx="6" stroke="#00D4FF" stroke-width="4" fill="#7B2FBE" fill-opacity="0.2"/>
             <rect x="42" y="10" width="16" height="10" rx="3" fill="#00D4FF" opacity="0.3"/>
             <rect x="30" y="45" width="40" height="40" rx="8" stroke="#00D4FF" stroke-width="4" fill="#7B2FBE" fill-opacity="0.2"/>
             <circle cx="50" cy="65" r="10" stroke="#00D4FF" stroke-width="3" fill="#00D4FF" fill-opacity="0.15"/>
             <circle cx="50" cy="65" r="4" fill="#00D4FF" opacity="0.6"/>
-            <line x1="38" y1="55" x2="62" y2="55" stroke="#00D4FF" stroke-width="2" opacity="0.4"/>
-            <circle cx="36" cy="75" r="3" fill="#7B2FBE" opacity="0.8"/>
-            <circle cx="64" cy="75" r="3" fill="#7B2FBE" opacity="0.8"/>
           </svg>
         </div>
         <span class="category-name">Cosmetics</span>
@@ -325,7 +306,7 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-logo">
-        <span>ARCNOVA</span>
+        <span>ArcNova</span>
         <p>Shop the Future</p>
       </div>
       <p class="footer-copy">© 2026 ArcNova. Powered by Arc Network.</p>
@@ -333,5 +314,6 @@
   </footer>
 
   <script src="/js/main.js"></script>
-<script src="/js/navbar.js"></script></body>
+  <script src="/js/navbar.js"></script>
+</body>
 </html>
