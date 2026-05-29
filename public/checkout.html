@@ -52,7 +52,6 @@
     <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px;">Checkout</h1>
     <p style="color: #888; margin-bottom: 40px;">Complete your purchase with USDC on Arc Network</p>
 
-    <!-- ADIM GÖSTERGESİ -->
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:40px;">
       <div style="display:flex; align-items:center; gap:8px;">
         <div style="width:28px; height:28px; border-radius:50%; background:#00D4AA; color:#000; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">1</div>
@@ -70,7 +69,7 @@
       </div>
     </div>
 
-    <!-- ADIM 1: SİPARİŞ ÖZETİ -->
+    <!-- STEP 1 -->
     <div id="step1">
       <div style="background:#1a1a2e; border:1px solid #2a2a4a; border-radius:16px; padding:24px; margin-bottom:24px;">
         <h2 style="font-size:18px; font-weight:700; margin-bottom:20px;">Order Summary</h2>
@@ -110,17 +109,15 @@
       </div>
 
       <button onclick="goToPayment()" style="
-        width:100%;
-        background: linear-gradient(135deg, #00D4AA, #7B2FBE);
+        width:100%; background: linear-gradient(135deg, #00D4AA, #7B2FBE);
         color:white; border:none; padding:16px;
-        border-radius:12px; cursor:pointer;
-        font-size:16px; font-weight:700;
+        border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;
       ">
         Continue to Payment →
       </button>
     </div>
 
-    <!-- ADIM 2: ÖDEME -->
+    <!-- STEP 2 -->
     <div id="step2" style="display:none;">
       <div style="background:#1a1a2e; border:1px solid #2a2a4a; border-radius:16px; padding:32px; margin-bottom:24px; text-align:center;">
         <div style="font-size:48px; margin-bottom:16px;">💳</div>
@@ -142,25 +139,20 @@
           </div>
         </div>
 
-        <div id="paymentStatus" style="display:none; background:rgba(0,212,170,0.05); border:1px solid rgba(0,212,170,0.2); border-radius:10px; padding:16px; margin-bottom:24px; font-size:13px; color:#00D4AA;">
-          ⏳ Waiting for MetaMask confirmation...
-        </div>
-
+        <div id="paymentStatus" style="display:none; background:rgba(0,212,170,0.05); border:1px solid rgba(0,212,170,0.2); border-radius:10px; padding:16px; margin-bottom:24px; font-size:13px; color:#00D4AA;"></div>
         <div id="errorMsg" style="display:none; background:rgba(255,68,68,0.05); border:1px solid rgba(255,68,68,0.3); border-radius:10px; padding:16px; margin-bottom:24px; font-size:13px; color:#ff4444;"></div>
 
         <button onclick="makePayment()" id="payBtn" style="
-          width:100%;
-          background: linear-gradient(135deg, #00D4AA, #7B2FBE);
+          width:100%; background: linear-gradient(135deg, #00D4AA, #7B2FBE);
           color:white; border:none; padding:16px;
-          border-radius:12px; cursor:pointer;
-          font-size:16px; font-weight:700;
+          border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;
         ">
           🔗 Pay with MetaMask
         </button>
       </div>
     </div>
 
-    <!-- ADIM 3: ONAY -->
+    <!-- STEP 3 -->
     <div id="step3" style="display:none; text-align:center;">
       <div style="background:#1a1a2e; border:1px solid #00D4AA; border-radius:16px; padding:48px 32px;">
         <div style="font-size:72px; margin-bottom:16px;">🎉</div>
@@ -173,15 +165,10 @@
         </div>
 
         <a id="arcScanLink" href="#" target="_blank" style="
-          display:block;
-          background: rgba(0,212,170,0.1);
-          border: 1px solid #00D4AA;
-          color: #00D4AA;
-          padding: 14px;
-          border-radius: 12px;
-          text-decoration: none;
-          font-weight: 600;
-          margin-bottom: 16px;
+          display:block; background: rgba(0,212,170,0.1);
+          border: 1px solid #00D4AA; color: #00D4AA;
+          padding: 14px; border-radius: 12px;
+          text-decoration: none; font-weight: 600; margin-bottom: 16px;
         ">
           🔍 View on ArcScan
         </a>
@@ -191,7 +178,6 @@
         </a>
       </div>
     </div>
-
   </section>
 
   <footer class="footer">
@@ -206,11 +192,10 @@
 
   <script src="/js/main.js"></script>
   <script>
-    // Arc Testnet USDC kontrat adresi
-    const USDC_CONTRACT = '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238';
+    // Arc Testnet USDC kontrat adresi (doğru adres)
+    const USDC_CONTRACT = '0x3600000000000000000000000000000000000000';
     const STORE_WALLET = '0xcAaDa98159b82b80D7940CFb527f7Ab44E650Cc8';
 
-    // USDC ABI (sadece transfer fonksiyonu)
     const USDC_ABI = [
       'function transfer(address to, uint256 amount) returns (bool)',
       'function balanceOf(address owner) view returns (uint256)',
@@ -271,32 +256,25 @@
         payBtn.disabled = true;
         payBtn.textContent = '⏳ Waiting for approval...';
         statusEl.style.display = 'block';
+        statusEl.textContent = '⏳ Please confirm the transaction in MetaMask...';
         errorEl.style.display = 'none';
 
-        // Ethers.js ile MetaMask bağlan
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
-
-        // USDC kontratına bağlan
         const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
 
-        // Toplam tutarı hesapla
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const total = subtotal + 0.001;
 
-        // USDC 6 decimal kullanır
+        // 6 decimal ile miktarı hesapla
         const amount = ethers.parseUnits(total.toFixed(6), 6);
 
-        // MetaMask onay penceresi açılacak
-        statusEl.textContent = '⏳ Please confirm the transaction in MetaMask...';
         const tx = await usdcContract.transfer(STORE_WALLET, amount);
-
         statusEl.textContent = '⏳ Transaction submitted, waiting for confirmation...';
-        const receipt = await tx.wait();
 
+        const receipt = await tx.wait();
         const txHash = receipt.hash;
 
-        // Siparişi kaydet
         await fetch('/api/payment/order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -308,12 +286,10 @@
           })
         });
 
-        // Sepeti temizle
         cart = [];
         localStorage.setItem('arcnova-cart', JSON.stringify(cart));
         updateCartCount();
 
-        // Adım 3
         document.getElementById('step2').style.display = 'none';
         document.getElementById('step3').style.display = 'block';
         document.getElementById('step3circle').style.background = '#00D4AA';
