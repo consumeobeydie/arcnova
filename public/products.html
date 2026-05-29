@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArcNova — Products</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <defs>
+            <radialGradient id="sg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#00D4AA"/>
+            </radialGradient>
+          </defs>
+          <polygon points="50,4 53,46 50,50 47,46" fill="url(#sg)"/>
+          <polygon points="50,96 53,54 50,50 47,54" fill="url(#sg)"/>
+          <polygon points="96,50 54,53 50,50 54,47" fill="url(#sg)"/>
+          <polygon points="4,50 46,53 50,50 46,47" fill="url(#sg)"/>
+          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4AA" opacity="0.8"/>
+          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4AA" opacity="0.8"/>
+          <polygon points="22,22 48,48 50,50 52,46" fill="#7B2FBE" opacity="0.8"/>
+          <polygon points="78,78 52,52 50,50 48,54" fill="#7B2FBE" opacity="0.8"/>
+          <circle cx="50" cy="50" r="4" fill="white"/>
+        </svg>
+        <span>ARCNOVA</span>
+      </div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/products.html">Products</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-wallet" id="connectWallet">🔗 Connect Wallet</button>
+        <div class="cart-icon" onclick="window.location.href='/cart.html'">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section style="padding: 120px 24px 80px; max-width: 1200px; margin: 0 auto;">
+    <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px;">All Products</h1>
+    <p style="color: #888; margin-bottom: 40px;">Pay with USDC on Arc Network</p>
+
+    <div class="filters" id="filters" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px;">
+      <button class="filter-btn active" onclick="filterProducts('All')">All</button>
+      <button class="filter-btn" onclick="filterProducts('Clothing')">Clothing</button>
+      <button class="filter-btn" onclick="filterProducts('Shoes')">Shoes</button>
+      <button class="filter-btn" onclick="filterProducts('Accessories')">Accessories</button>
+      <button class="filter-btn" onclick="filterProducts('Bags')">Bags</button>
+    </div>
+
+    <div style="margin-bottom:32px;">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search products..."
+        style="
+          background: #1a1a2e;
+          border: 1px solid #2a2a4a;
+          color: white;
+          padding: 12px 20px;
+          border-radius: 10px;
+          font-size: 14px;
+          width: 100%;
+          max-width: 400px;
+          outline: none;
+        "
+        oninput="searchProducts(this.value)"
+      />
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <span>ARCNOVA</span>
+        <p>Shop the Future</p>
+      </div>
+      <p class="footer-copy">© 2026 ArcNova. Powered by Arc Network.</p>
+    </div>
+  </footer>
+
+  <style>
+    .filter-btn {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      color: #888;
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #00D4AA;
+      border-color: #00D4AA;
+      color: #000;
+      font-weight: 600;
+    }
+  </style>
+
+  <script src="/js/main.js"></script>
+  <script>
+    let allProducts = [];
+    let activeCategory = 'All';
+
+    async function loadProducts() {
+      const res = await fetch('/api/products');
+      allProducts = await res.json();
+      renderProducts(allProducts);
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById('productsGrid');
+      if (products.length === 0) {
+        grid.innerHTML = '<p style="color:#888; text-align:center; grid-column:1/-1;">No products found.</p>';
+        return;
+      }
+      grid.innerHTML = products.map(p => `
+        <div class="product-card" onclick="window.location.href='/product.html?id=${p.id}'">
+          <img src="${p.image}" alt="${p.name}">
+          <div class="product-info">
+            <div class="product-category">${p.category}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-price">${p.price} <span>USDC</span></div>
+            <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterProducts(category) {
+      activeCategory = category;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggl
