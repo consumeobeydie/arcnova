@@ -73,3 +73,4 @@ router.get('/reviews/:productId', (req, res) => {
 });
 
 module.exports = router;
+module.exports.getOrders = () => orders;
