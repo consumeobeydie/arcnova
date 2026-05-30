@@ -275,8 +275,7 @@
         const tx = await usdcContract.transfer(STORE_WALLET, amount);
         statusEl.textContent = 'Transaction submitted, waiting for confirmation...';
 
-        const receipt = await tx.wait();
-        const txHash = receipt.hash;
+        const txHash = tx.hash;
 
         await fetch('/api/payment/order', {
           method: 'POST',
@@ -324,3 +323,5 @@
   <script src="/js/navbar.js"></script>
 </body>
 </html>
+
+
