@@ -1,68 +1,87 @@
-﻿require('dotenv').config();
-const express = require('express');
-const router = express.Router();
-const { createClient } = require('@supabase/supabase-js');
+﻿async function makePayment() {
+  const wallet = localStorage.getItem('walletAddress');
+  if (!wallet) { alert('Please connect your wallet first!'); return; }
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+  const payBtn = document.getElementById('payBtn');
+  const statusEl = document.getElementById('paymentStatus');
+  const errorEl = document.getElementById('errorMsg');
 
-let orders = [];
+  try {
+    payBtn.disabled = true;
+    payBtn.textContent = 'Switching to Arc Testnet...';
+    statusEl.style.display = 'block';
+    statusEl.textContent = 'Switching to Arc Testnet...';
+    errorEl.style.display = 'none';
 
-router.get('/address', (req, res) => {
-  res.json({
-    address: process.env.WALLET_ADDRESS,
-    network: 'Arc Testnet',
-    token: 'USDC',
-    chainId: 5042002
-  });
-});
+    let ethProvider = window.__arcnovaProvider || window.ethereum;
+    await switchToArc(ethProvider);
 
-router.post('/order', (req, res) => {
-  const { items, totalAmount, buyerAddress, txHash, shipping } = req.body;
-  if (!items || !totalAmount || !buyerAddress) {
-    return res.status(400).json({ error: 'Missing information' });
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + 0.001;
+    // ERC-20 interface: 6 decimals
+    const amountInUnits = Math.round(total * 1e6);
+
+    // to adresi 32 byte'a pad'lendi
+    const paddedTo = STORE_WALLET.replace('0x', '').toLowerCase().padStart(64, '0');
+    const paddedAmount = amountInUnits.toString(16).padStart(64, '0');
+
+    // transfer(address,uint256) function selector
+    const transferData = '0xa9059cbb' + paddedTo + paddedAmount;
+
+    statusEl.textContent = 'Please confirm the transaction in your wallet...';
+    payBtn.textContent = 'Waiting for confirmation...';
+
+    const txHash = await ethProvider.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: wallet,
+        to: USDC_CONTRACT,
+        data: transferData,
+        // gas değeri hex olarak daha yüksek tutuldu
+        gas: '0x30D40'
+      }]
+    });
+
+    // Sipariş kaydı
+    await fetch('/api/payment/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: cart,
+        totalAmount: total.toFixed(6),
+        buyerAddress: wallet,
+        txHash,
+        shipping: {
+          name: document.getElementById('fullName').value || null,
+          email: document.getElementById('email').value || null,
+          address: document.getElementById('shippingAddress').value || null,
+        }
+      })
+    });
+
+    cart = [];
+    localStorage.setItem('arcnova-cart', JSON.stringify(cart));
+    updateCartCount();
+
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step3').style.display = 'block';
+    document.getElementById('step3circle').style.background = '#00D4FF';
+    document.getElementById('step3circle').style.color = '#000';
+    document.getElementById('step3text').style.color = '#00D4FF';
+
+    document.getElementById('txHashDisplay').textContent = txHash;
+    document.getElementById('arcScanLink').href = 'https://testnet.arcscan.app/tx/' + txHash;
+
+    showToast('Payment confirmed on blockchain!');
+
+  } catch (err) {
+    console.error(err);
+    payBtn.disabled = false;
+    payBtn.textContent = 'Pay with USDC';
+    statusEl.style.display = 'none';
+    errorEl.textContent = err.code === 4001
+      ? 'Transaction rejected.'
+      : 'Error: ' + (err.reason || err.message);
+    errorEl.style.display = 'block';
   }
-  const order = {
-    id: Date.now(), items, totalAmount, buyerAddress,
-    txHash: txHash || null, shipping: shipping || null,
-    status: txHash ? 'confirmed' : 'pending',
-    createdAt: new Date().toISOString(),
-    arcScanUrl: txHash ? `https://testnet.arcscan.app/tx/${txHash}` : null
-  };
-  orders.push(order);
-  console.log('New order:', order);
-  res.json({ success: true, order });
-});
-
-router.post('/review', async (req, res) => {
-  const { productId, address, rating, text, txHash } = req.body;
-  if (!productId || !address || !rating || !text || !txHash) {
-    return res.status(400).json({ error: 'Missing information' });
-  }
-  const review = {
-    product_id: productId,
-    address,
-    rating: parseInt(rating),
-    text,
-    tx_hash: txHash,
-    arc_scan_url: `https://testnet.arcscan.app/tx/${txHash}`
-  };
-  const { data, error } = await supabase.from('reviews').insert([review]).select().single();
-  if (error) {
-    console.error('Supabase error:', error);
-    return res.status(500).json({ error: 'Could not save review' });
-  }
-  res.json({ success: true, review: data });
-});
-
-router.get('/reviews/:productId', async (req, res) => {
-  const { data, error } = await supabase
-    .from('reviews')
-    .select('*')
-    .eq('product_id', req.params.productId)
-    .order('created_at', { ascending: false });
-  if (error) return res.status(500).json({ error: 'Could not fetch reviews' });
-  res.json(data || []);
-});
-
-module.exports = router;
-module.exports.getOrders = () => orders;
+}
