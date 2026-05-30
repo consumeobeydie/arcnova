@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ArcNova - Shop the Future</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><script src="/js/main.js"></script>
   <style>
     .category-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px; }
     .category-card { background:#0d0d24; border:1px solid #1a1a3a; border-radius:16px; padding:24px 12px; text-align:center; text-decoration:none; transition:all 0.3s; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; cursor:pointer; position:relative; overflow:hidden; }
@@ -43,7 +43,7 @@
         <a href="/products.html">Products</a>
       </div>
       <div class="nav-actions">
-        <button class="btn-wallet" id="connectWallet" onclick="connectWallet()">Connect Wallet</button>
+        <button class="btn-wallet" id="connectWallet">Connect Wallet</button>
         <div class="cart-icon" onclick="window.location.href='/cart.html'">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           <span class="cart-count" id="cartCount">0</span>
@@ -156,8 +156,9 @@
     </div>
   </footer>
 
-  <script src="/js/main.js"></script>
   <script src="/js/navbar.js"></script>
 </body>
 </html>
 '@ | Set-Content -Path ".\public\index.html" -Encoding UTF8
+
+
