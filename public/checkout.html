@@ -200,7 +200,7 @@
       `).join('');
     }
 
-    function goToPayment() {
+    window.goToPayment = function() {
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
       document.getElementById('step2circle').style.background = '#00D4FF';
@@ -236,7 +236,7 @@
       }
     }
 
-    async function makePayment() {
+    async window.makePayment = function() {
       const wallet = localStorage.getItem('walletAddress');
       if (!wallet) { alert('Please connect your wallet first!'); return; }
 
