@@ -129,7 +129,7 @@ const products = [
     name: "Slip-On Loafers",
     price: 0.003,
     category: "Shoes",
-    image: "https://images.unsplash.com/photo-1619138622990-4b5c86e9e21c?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=400&h=400&fit=crop&auto=format",
     description: "Comfortable slip-on loafers in premium suede.",
     stock: 12
   },
