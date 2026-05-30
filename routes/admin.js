@@ -5,7 +5,7 @@ const router = express.Router();
 const ADMIN_WALLET = (process.env.ADMIN_WALLET || process.env.WALLET_ADDRESS || '').toLowerCase();
 const STORE_WALLET = process.env.WALLET_ADDRESS || '';
 const USDC_CONTRACT = process.env.USDC_CONTRACT || '0x3600000000000000000000000000000000000000';
-const ARC_RPC = process.env.ARC_RPC || 'https://rpc.arcnetwork.xyz';
+const ARC_RPC = process.env.ARC_RPC || 'https://arc-testnet.drpc.org';
 const ARCSCAN_API = 'https://testnet.arcscan.app/api';
 
 let _paymentModule = null;
@@ -125,3 +125,4 @@ router.get('/orders', requireAdmin, (req, res) => {
 });
 
 module.exports = router;
+
