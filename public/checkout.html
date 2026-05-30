@@ -264,6 +264,7 @@
         payBtn.textContent = 'Waiting for approval...';
 
         const provider = new ethers.BrowserProvider(ethProvider);
+        provider.pollingInterval = 4000;
         const signer = await provider.getSigner();
         const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
 
@@ -323,5 +324,6 @@
   <script src="/js/navbar.js"></script>
 </body>
 </html>
+
 
 
