@@ -43,7 +43,7 @@ function showWalletModal() {
     modal.id = 'walletModal';
     modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:99999;';
     const walletOptions = detectedProviders.length > 0
-      ? detectedProviders.map(p => '<button onclick="window.connectWithProvider(' + JSON.stringify(p.info.uuid) + ')" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:12px;"><img src="' + p.info.icon + '" width="32" height="32" style="border-radius:8px;"/><span>' + p.info.name + '</span></button>').join('')
+      ? detectedProviders.map(p => '<button onclick="window.connectWithProvider(this.dataset.uuid)" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:12px;"><img src="' + p.info.icon + '" width="32" height="32" style="border-radius:8px;"/><span>' + p.info.name + '</span></button>').join('')
       : window.ethereum
         ? '<button onclick="window.connectWithEthereum()" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;margin-bottom:12px;">Browser Wallet</button>'
         : '<p style="color:#888;text-align:center;padding:20px;">No wallet found.</p>';
@@ -154,3 +154,4 @@ async function loadFeaturedProducts() {
     grid.innerHTML = products.slice(0, 3).map(p => '<div class="product-card" onclick="window.location.href=\'/product.html?id=' + p.id + '\'"><img src="' + p.image + '" alt="' + p.name + '"><div class="product-info"><div class="product-category">' + p.category + '</div><div class="product-name">' + p.name + '</div><div class="product-price">' + p.price + ' <span>USDC</span></div><button class="btn-add-cart" onclick="event.stopPropagation();addToCart(' + JSON.stringify(p).replace(/"/g, '&quot;') + ')">Add to Cart</button></div></div>').join('');
   } catch (err) { console.error(err); }
 }
+
