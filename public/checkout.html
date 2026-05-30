@@ -263,19 +263,24 @@
         statusEl.textContent = 'Please confirm the transaction in your wallet...';
         payBtn.textContent = 'Waiting for approval...';
 
-        const network = new ethers.Network('Arc Testnet', ARC_CHAIN_ID_DEC);
-        const provider = new ethers.BrowserProvider(ethProvider, network, { staticNetwork: true });
-        const signer = await provider.getSigner();
-        const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
-
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const total = subtotal + 0.001;
-        const amount = ethers.parseUnits(total.toFixed(6), 6);
+        const amountInUnits = Math.round(total * 1e6);
+        const amountHex = '0x' + amountInUnits.toString(16).padStart(64, '0');
 
-        const tx = await usdcContract.transfer(STORE_WALLET, amount);
-        statusEl.textContent = 'Transaction submitted, waiting for confirmation...';
+        const transferData = '0xa9059cbb' +
+          STORE_WALLET.replace('0x', '').toLowerCase().padStart(64, '0') +
+          amountHex.replace('0x', '');
 
-        const txHash = tx.hash;
+        const txHash = await ethProvider.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: wallet,
+            to: USDC_CONTRACT,
+            data: transferData,
+            gas: '0x186A0'
+          }]
+        });
 
         await fetch('/api/payment/order', {
           method: 'POST',
