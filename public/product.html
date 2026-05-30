@@ -38,7 +38,12 @@
       <div class="nav-actions">
         <button class="btn-wallet" id="connectWallet">Connect Wallet</button>
         <div class="cart-icon" onclick="window.location.href='/cart.html'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`n          <span class="cart-count" id="cartCount">0</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
         </div>
       </div>
     </div>
@@ -72,26 +77,13 @@
             <span onclick="setRating(5)" style="opacity:1; transition:opacity 0.2s;">&#11088;</span>
           </div>
         </div>
-
-        <textarea id="reviewText" placeholder="Share your experience with this product..." style="
-          width:100%; background:#080818; border:1px solid #1a1a3a;
-          color:white; padding:12px 16px; border-radius:10px;
-          font-size:14px; resize:vertical; min-height:100px;
-          outline:none; font-family:inherit; margin-bottom:16px;
-        "></textarea>
-
+        <textarea id="reviewText" placeholder="Share your experience with this product..." style="width:100%; background:#080818; border:1px solid #1a1a3a; color:white; padding:12px 16px; border-radius:10px; font-size:14px; resize:vertical; min-height:100px; outline:none; font-family:inherit; margin-bottom:16px;"></textarea>
         <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#00D4FF;">
           Submitting a review costs <strong>0.001 USDC</strong> &mdash; prevents spam and records your review on-chain.
         </div>
-
         <div id="reviewStatus" style="display:none; background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#00D4FF;"></div>
         <div id="reviewError" style="display:none; background:rgba(255,68,68,0.05); border:1px solid rgba(255,68,68,0.3); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#ff4444;"></div>
-
-        <button onclick="submitReview()" id="submitReviewBtn" style="
-          background:linear-gradient(135deg, #00D4FF, #7B2FBE);
-          color:white; border:none; padding:12px 24px;
-          border-radius:10px; cursor:pointer; font-size:14px; font-weight:600;
-        ">
+        <button onclick="submitReview()" id="submitReviewBtn" style="background:linear-gradient(135deg, #00D4FF, #7B2FBE); color:white; border:none; padding:12px 24px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:600;">
           Submit Review on Blockchain
         </button>
       </div>
@@ -111,22 +103,17 @@
   </footer>
 
   <style>
-    @media (max-width: 768px) {
-      #productDetail { grid-template-columns: 1fr !important; }
-    }
-    .review-card {
-      background: #0d0d24; border: 1px solid #1a1a3a;
-      border-radius: 12px; padding: 20px; margin-bottom: 16px; transition: border-color 0.2s;
-    }
-    .review-card:hover { border-color: #00D4FF; }
-    .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .review-address { font-family: monospace; font-size: 13px; color: #00D4FF; }
-    .review-date { color: #555; font-size: 12px; }
-    .review-stars { font-size: 16px; margin-bottom: 8px; }
-    .review-text { color: #ccc; font-size: 14px; line-height: 1.6; }
-    .review-tx { margin-top: 12px; font-size: 12px; color: #555; }
-    .review-tx a { color: #7B2FBE; text-decoration: none; }
-    .review-tx a:hover { color: #00D4FF; }
+    @media (max-width: 768px) { #productDetail { grid-template-columns: 1fr !important; } }
+    .review-card { background:#0d0d24; border:1px solid #1a1a3a; border-radius:12px; padding:20px; margin-bottom:16px; transition:border-color 0.2s; }
+    .review-card:hover { border-color:#00D4FF; }
+    .review-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+    .review-address { font-family:monospace; font-size:13px; color:#00D4FF; }
+    .review-date { color:#555; font-size:12px; }
+    .review-stars { font-size:16px; margin-bottom:8px; }
+    .review-text { color:#ccc; font-size:14px; line-height:1.6; }
+    .review-tx { margin-top:12px; font-size:12px; color:#555; }
+    .review-tx a { color:#7B2FBE; text-decoration:none; }
+    .review-tx a:hover { color:#00D4FF; }
   </style>
 
   <script src="/js/main.js"></script>
@@ -165,15 +152,10 @@
             <div style="margin-bottom:6px;"><strong style="color:#fff;">Payment:</strong> USDC</div>
             <div><strong style="color:#fff;">Stock:</strong> ${currentProduct.stock} units</div>
           </div>
-          <button onclick="addToCart(currentProduct)" style="
-            width:100%; background:linear-gradient(135deg, #00D4FF, #7B2FBE);
-            color:white; border:none; padding:16px; border-radius:12px;
-            cursor:pointer; font-size:16px; font-weight:700; margin-bottom:12px;">
+          <button onclick="addToCart(currentProduct)" style="width:100%; background:linear-gradient(135deg,#00D4FF,#7B2FBE); color:white; border:none; padding:16px; border-radius:12px; cursor:pointer; font-size:16px; font-weight:700; margin-bottom:12px;">
             Add to Cart
           </button>
-          <button onclick="window.location.href='/cart.html'" style="
-            width:100%; background:none; border:1px solid #1a1a3a;
-            color:#888; padding:14px; border-radius:12px; cursor:pointer; font-size:15px; transition:all 0.2s;"
+          <button onclick="window.location.href='/cart.html'" style="width:100%; background:none; border:1px solid #1a1a3a; color:#888; padding:14px; border-radius:12px; cursor:pointer; font-size:15px; transition:all 0.2s;"
             onmouseover="this.style.borderColor='#00D4FF'; this.style.color='#00D4FF'"
             onmouseout="this.style.borderColor='#1a1a3a'; this.style.color='#888'">
             View Cart
@@ -192,18 +174,18 @@
     async function loadReviews() {
       try {
         const res = await fetch(`/api/payment/reviews/${productId}`);
-        const productReviews = await res.json();
+        const data = await res.json();
         const list = document.getElementById('reviewsList');
-        if (productReviews.length === 0) {
+        if (!data || data.length === 0) {
           list.innerHTML = '<p style="color:#555; text-align:center; padding:40px;">No reviews yet. Be the first to review!</p>';
           return;
         }
-        list.innerHTML = productReviews.map(r => `
+        list.innerHTML = data.map(r => `
           <div class="review-card">
             <div class="review-header">
               <div>
                 <div class="review-address">${r.address}</div>
-                <div class="review-date">${r.date || new Date(r.created_at).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})}</div>
+                <div class="review-date">${r.date || ''}</div>
               </div>
               <div class="review-stars">${'&#11088;'.repeat(r.rating)}</div>
             </div>
@@ -227,7 +209,8 @@
       const statusEl = document.getElementById('reviewStatus');
       const errorEl = document.getElementById('reviewError');
       try {
-        btn.disabled = true; btn.textContent = 'Waiting for approval...';
+        btn.disabled = true;
+        btn.textContent = 'Waiting for approval...';
         statusEl.style.display = 'block';
         statusEl.textContent = 'Please confirm the 0.001 USDC payment in your wallet...';
         errorEl.style.display = 'none';
@@ -246,13 +229,15 @@
           body: JSON.stringify({ productId, address: wallet, rating: selectedRating, text, txHash })
         });
         document.getElementById('reviewText').value = '';
-        btn.disabled = false; btn.textContent = 'Submit Review on Blockchain';
+        btn.disabled = false;
+        btn.textContent = 'Submit Review on Blockchain';
         statusEl.style.display = 'none';
         loadReviews();
         showToast('Review submitted on blockchain!');
       } catch (err) {
         console.error(err);
-        btn.disabled = false; btn.textContent = 'Submit Review on Blockchain';
+        btn.disabled = false;
+        btn.textContent = 'Submit Review on Blockchain';
         statusEl.style.display = 'none';
         errorEl.textContent = err.code === 4001 ? 'Transaction rejected.' : 'Error: ' + (err.reason || err.message);
         errorEl.style.display = 'block';
@@ -265,6 +250,3 @@
   <script src="/js/navbar.js"></script>
 </body>
 </html>
-
-
-
