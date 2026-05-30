@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ArcNova — Checkout</title>
+  <title>ArcNova - Checkout</title>
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 </head>
@@ -36,9 +36,9 @@
         <a href="/products.html">Products</a>
       </div>
       <div class="nav-actions">
-        <button class="btn-wallet" id="connectWallet">🔗 Connect Wallet</button>
+        <button class="btn-wallet" id="connectWallet">Connect Wallet</button>
         <div class="cart-icon" onclick="window.location.href='/cart.html'">
-          🛒 <span class="cart-count" id="cartCount">0</span>
+          Cart <span class="cart-count" id="cartCount">0</span>
         </div>
       </div>
     </div>
@@ -46,13 +46,12 @@
 
   <section style="padding: 120px 24px 80px; max-width: 800px; margin: 0 auto;">
     <a href="/cart.html" style="color:#888; text-decoration:none; font-size:14px; display:inline-block; margin-bottom:32px;">
-      ← Back to Cart
+      &larr; Back to Cart
     </a>
 
     <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px;">Checkout</h1>
     <p style="color: #888; margin-bottom: 40px;">Complete your purchase with USDC on Arc Network</p>
 
-    <!-- STEPS -->
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:40px;">
       <div style="display:flex; align-items:center; gap:8px;">
         <div style="width:28px; height:28px; border-radius:50%; background:#00D4FF; color:#000; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">1</div>
@@ -70,34 +69,29 @@
       </div>
     </div>
 
-    <!-- STEP 1 -->
     <div id="step1">
       <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:16px; padding:24px; margin-bottom:24px;">
         <h2 style="font-size:18px; font-weight:700; margin-bottom:20px;">Order Summary</h2>
         <div id="checkoutItems"></div>
         <div style="border-top:1px solid #1a1a3a; padding-top:16px; margin-top:16px;">
           <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#888; font-size:14px;">
-            <span>Subtotal</span>
-            <span id="checkoutSubtotal"></span>
+            <span>Subtotal</span><span id="checkoutSubtotal"></span>
           </div>
           <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#888; font-size:14px;">
-            <span>Network Fee</span>
-            <span style="color:#00D4FF;">~0.001 USDC</span>
+            <span>Network Fee</span><span style="color:#00D4FF;">~0.001 USDC</span>
           </div>
           <div style="display:flex; justify-content:space-between; font-size:20px; font-weight:700; margin-top:12px;">
-            <span>Total</span>
-            <span id="checkoutTotal" style="color:#00D4FF;"></span>
+            <span>Total</span><span id="checkoutTotal" style="color:#00D4FF;"></span>
           </div>
         </div>
       </div>
 
-      <!-- SHIPPING - OPTIONAL -->
       <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:16px; padding:24px; margin-bottom:24px;">
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
           <h2 style="font-size:18px; font-weight:700; margin:0;">Shipping Information</h2>
           <span style="background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); color:#00D4FF; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:600;">Optional</span>
         </div>
-        <p style="color:#888; font-size:12px; margin-bottom:20px;">Fill in if you'd like your order delivered to your address</p>
+        <p style="color:#888; font-size:12px; margin-bottom:20px;">Fill in if you would like your order delivered</p>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
           <div>
             <label style="color:#888; font-size:12px; display:block; margin-bottom:6px;">FULL NAME</label>
@@ -117,18 +111,15 @@
       <button onclick="goToPayment()" style="
         width:100%; background: linear-gradient(135deg, #00D4FF, #7B2FBE);
         color:white; border:none; padding:16px;
-        border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;
-      ">
-        Continue to Payment →
+        border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;">
+        Continue to Payment &rarr;
       </button>
     </div>
 
-    <!-- STEP 2 -->
     <div id="step2" style="display:none;">
       <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:16px; padding:32px; margin-bottom:24px; text-align:center;">
-        <div style="font-size:48px; margin-bottom:16px;">💳</div>
         <h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">Pay with USDC</h2>
-        <p style="color:#888; margin-bottom:32px; font-size:14px;">MetaMask will ask you to confirm the transaction</p>
+        <p style="color:#888; margin-bottom:32px; font-size:14px;">Your wallet will ask you to confirm the transaction on Arc Testnet</p>
 
         <div style="background:#080818; border:1px solid #1a1a3a; border-radius:12px; padding:20px; margin-bottom:24px; text-align:left;">
           <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px;">
@@ -151,37 +142,28 @@
         <button onclick="makePayment()" id="payBtn" style="
           width:100%; background: linear-gradient(135deg, #00D4FF, #7B2FBE);
           color:white; border:none; padding:16px;
-          border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;
-        ">
-          🔗 Pay with MetaMask
+          border-radius:12px; cursor:pointer; font-size:16px; font-weight:700;">
+          Pay with USDC
         </button>
       </div>
     </div>
 
-    <!-- STEP 3 -->
     <div id="step3" style="display:none; text-align:center;">
       <div style="background:#0d0d24; border:1px solid #00D4FF; border-radius:16px; padding:48px 32px;">
-        <div style="font-size:72px; margin-bottom:16px;">🎉</div>
         <h2 style="font-size:28px; font-weight:800; margin-bottom:8px;">Order Confirmed!</h2>
         <p style="color:#888; margin-bottom:32px;">Your payment has been recorded on the Arc blockchain</p>
-
         <div style="background:#080818; border:1px solid #1a1a3a; border-radius:12px; padding:20px; margin-bottom:24px; text-align:left;">
           <div style="color:#888; font-size:12px; margin-bottom:8px; letter-spacing:1px;">TRANSACTION HASH</div>
           <div id="txHashDisplay" style="font-family:monospace; font-size:13px; color:#00D4FF; word-break:break-all;"></div>
         </div>
-
         <a id="arcScanLink" href="#" target="_blank" style="
           display:block; background:rgba(0,212,255,0.1);
           border:1px solid #00D4FF; color:#00D4FF;
           padding:14px; border-radius:12px;
-          text-decoration:none; font-weight:600; margin-bottom:16px;
-        ">
-          🔍 View on ArcScan
+          text-decoration:none; font-weight:600; margin-bottom:16px;">
+          View on ArcScan
         </a>
-
-        <a href="/products.html" class="btn-primary" style="display:block; text-align:center;">
-          Continue Shopping
-        </a>
+        <a href="/products.html" class="btn-primary" style="display:block; text-align:center;">Continue Shopping</a>
       </div>
     </div>
   </section>
@@ -192,7 +174,7 @@
         <span>ARCNOVA</span>
         <p>Shop the Future</p>
       </div>
-      <p class="footer-copy">© 2026 ArcNova. Powered by Arc Network.</p>
+      <p class="footer-copy">&copy; 2026 ArcNova. Powered by Arc Network.</p>
     </div>
   </footer>
 
@@ -200,7 +182,7 @@
   <script>
     const USDC_CONTRACT = '0x3600000000000000000000000000000000000000';
     const STORE_WALLET = '0xcAaDa98159b82b80D7940CFb527f7Ab44E650Cc8';
-
+    const ARC_CHAIN_ID = '0x4CEDD2';
     const USDC_ABI = [
       'function transfer(address to, uint256 amount) returns (bool)',
       'function balanceOf(address owner) view returns (uint256)',
@@ -210,11 +192,9 @@
     function renderCheckout() {
       const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const total = subtotal + 0.001;
-
-      document.getElementById('checkoutSubtotal').textContent = `${subtotal.toFixed(6)} USDC`;
-      document.getElementById('checkoutTotal').textContent = `${total.toFixed(6)} USDC`;
-      document.getElementById('payAmount').textContent = `${total.toFixed(6)} USDC`;
-
+      document.getElementById('checkoutSubtotal').textContent = subtotal.toFixed(6) + ' USDC';
+      document.getElementById('checkoutTotal').textContent = total.toFixed(6) + ' USDC';
+      document.getElementById('payAmount').textContent = total.toFixed(6) + ' USDC';
       document.getElementById('checkoutItems').innerHTML = cart.map(item => `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -237,12 +217,33 @@
       document.getElementById('step2text').style.color = '#00D4FF';
     }
 
+    async function switchToArc(ethProvider) {
+      try {
+        await ethProvider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: ARC_CHAIN_ID }]
+        });
+      } catch (e) {
+        if (e.code === 4902) {
+          await ethProvider.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: ARC_CHAIN_ID,
+              chainName: 'Arc Testnet',
+              nativeCurrency: { name: 'ARC', symbol: 'ARC', decimals: 18 },
+              rpcUrls: ['https://rpc.arcnetwork.xyz'],
+              blockExplorerUrls: ['https://testnet.arcscan.app']
+            }]
+          });
+        } else {
+          throw e;
+        }
+      }
+    }
+
     async function makePayment() {
       const wallet = localStorage.getItem('walletAddress');
-      if (!wallet) {
-        alert('Please connect your wallet first!');
-        return;
-      }
+      if (!wallet) { alert('Please connect your wallet first!'); return; }
 
       const payBtn = document.getElementById('payBtn');
       const statusEl = document.getElementById('paymentStatus');
@@ -250,16 +251,17 @@
 
       try {
         payBtn.disabled = true;
-        payBtn.textContent = '⏳ Waiting for approval...';
+        payBtn.textContent = 'Switching to Arc Testnet...';
         statusEl.style.display = 'block';
-        statusEl.textContent = '⏳ Please confirm the transaction in MetaMask...';
+        statusEl.textContent = 'Switching to Arc Testnet...';
         errorEl.style.display = 'none';
 
-        // Provider'ı belirle
-        let ethProvider = window.ethereum;
-        if (window.__arcnovaProvider) {
-          ethProvider = window.__arcnovaProvider;
-        }
+        let ethProvider = window.__arcnovaProvider || window.ethereum;
+
+        await switchToArc(ethProvider);
+
+        statusEl.textContent = 'Please confirm the transaction in your wallet...';
+        payBtn.textContent = 'Waiting for approval...';
 
         const provider = new ethers.BrowserProvider(ethProvider);
         const signer = await provider.getSigner();
@@ -270,7 +272,7 @@
         const amount = ethers.parseUnits(total.toFixed(6), 6);
 
         const tx = await usdcContract.transfer(STORE_WALLET, amount);
-        statusEl.textContent = '⏳ Transaction submitted, waiting for confirmation...';
+        statusEl.textContent = 'Transaction submitted, waiting for confirmation...';
 
         const receipt = await tx.wait();
         const txHash = receipt.hash;
@@ -302,26 +304,22 @@
         document.getElementById('step3text').style.color = '#00D4FF';
 
         document.getElementById('txHashDisplay').textContent = txHash;
-        document.getElementById('arcScanLink').href = `https://testnet.arcscan.app/tx/${txHash}`;
+        document.getElementById('arcScanLink').href = 'https://testnet.arcscan.app/tx/' + txHash;
 
-        showToast('Payment confirmed on blockchain! 🎉');
+        showToast('Payment confirmed on blockchain!');
 
       } catch (err) {
         console.error(err);
         payBtn.disabled = false;
-        payBtn.textContent = '🔗 Pay with MetaMask';
+        payBtn.textContent = 'Pay with USDC';
         statusEl.style.display = 'none';
-
-        if (err.code === 4001) {
-          errorEl.textContent = '❌ Transaction rejected. Please try again.';
-        } else {
-          errorEl.textContent = '❌ Error: ' + (err.reason || err.message);
-        }
+        errorEl.textContent = err.code === 4001 ? 'Transaction rejected.' : 'Error: ' + (err.reason || err.message);
         errorEl.style.display = 'block';
       }
     }
 
     renderCheckout();
   </script>
-<script src="/js/navbar.js"></script></body>
+  <script src="/js/navbar.js"></script>
+</body>
 </html>
