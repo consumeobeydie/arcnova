@@ -189,4 +189,3 @@ async function loadFeaturedProducts() {
       </div>`).join('');
   } catch (err) { console.error(err); }
 }
-'@ | Set-Content -Path ".\public\js\main.js" -Encoding UTF8
