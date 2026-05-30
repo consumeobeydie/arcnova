@@ -1,4 +1,4 @@
-require('dotenv').config();
+﻿require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
@@ -7,14 +7,14 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-// Routes
 const productsRoute = require('./routes/products');
-const paymentRoute = require('./routes/payment');
+const paymentRoute  = require('./routes/payment');
+const adminRoute    = require('./routes/admin');
 
 app.use('/api/products', productsRoute);
-app.use('/api/payment', paymentRoute);
+app.use('/api/payment',  paymentRoute);
+app.use('/api/admin',    adminRoute);
 
-// Ana sayfa
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
