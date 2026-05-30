@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ArcNova â€” Products</title>
+  <title>ArcNova — Products</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -35,8 +35,14 @@
         <a href="/products.html">Products</a>
       </div>
       <div class="nav-actions">
-        <button class="btn-wallet" id="connectWallet">ğŸ”— Connect Wallet</button>
-        <div class="cart-icon" onclick="window.location.href='/cart.html'">`n          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`n          <span class="cart-count" id="cartCount">0</span>
+        <button class="btn-wallet" id="connectWallet">Connect Wallet</button>
+        <div class="cart-icon" onclick="window.location.href='/cart.html'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
         </div>
       </div>
     </div>
@@ -46,107 +52,31 @@
     <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px; letter-spacing:-1px;">All Products</h1>
     <p style="color: #7a7a9a; margin-bottom: 40px; letter-spacing:1px; font-size:13px; text-transform:uppercase;">Pay with USDC on Arc Network</p>
 
-    <!-- FÄ°LTRELER -->
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
-
       <button class="filter-btn active" onclick="filterProducts('All')">All</button>
-
-      <button class="filter-btn" onclick="filterProducts('Technology')">
-        <svg width="20" height="20" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <rect x="10" y="15" width="80" height="55" rx="6" stroke="currentColor" stroke-width="6" fill="none"/>
-          <polyline points="25,52 35,38 45,46 55,30 65,42 75,35" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        Technology
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Clothing')">
-        <svg width="20" height="20" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <path d="M35 15 L20 30 L30 35 L30 80 L70 80 L70 35 L80 30 L65 15 C65 15 60 25 50 25 C40 25 35 15 35 15Z" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill="none"/>
-        </svg>
-        Clothing
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Shoes')">
-        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <path d="M10 65 C10 65 15 45 30 40 C40 37 45 42 55 40 C65 38 75 30 82 32 C89 34 90 42 88 48 C86 54 80 58 70 60 L20 72 C15 73 10 70 10 65Z" stroke="currentColor" stroke-width="6" fill="none"/>
-        </svg>
-        Shoes
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Jewelry')">
-        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <polygon points="50,15 62,38 88,42 69,60 74,86 50,74 26,86 31,60 12,42 38,38" stroke="currentColor" stroke-width="6" fill="none" stroke-linejoin="round"/>
-        </svg>
-        Jewelry
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Toys')">
-        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <rect x="25" y="35" width="50" height="40" rx="8" stroke="currentColor" stroke-width="6" fill="none"/>
-          <rect x="35" y="25" width="12" height="14" rx="4" stroke="currentColor" stroke-width="5" fill="none"/>
-          <rect x="53" y="25" width="12" height="14" rx="4" stroke="currentColor" stroke-width="5" fill="none"/>
-        </svg>
-        Toys
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Books')">
-        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <rect x="20" y="15" width="45" height="70" rx="4" stroke="currentColor" stroke-width="6" fill="none"/>
-          <line x1="38" y1="32" x2="57" y2="32" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <line x1="38" y1="42" x2="57" y2="42" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <line x1="38" y1="52" x2="57" y2="52" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-        </svg>
-        Books
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Home & Living')">
-        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <path d="M50 15 L85 45 L75 45 L75 82 L25 82 L25 45 L15 45 Z" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill="none"/>
-          <rect x="40" y="58" width="20" height="24" rx="2" stroke="currentColor" stroke-width="5" fill="none"/>
-        </svg>
-        Home & Living
-      </button>
-
-      <button class="filter-btn" onclick="filterProducts('Cosmetics')">
-        <svg width="16" height="16" viewBox="0 0 100 100" fill="none" style="vertical-align:middle; margin-right:6px;">
-          <rect x="38" y="10" width="24" height="35" rx="6" stroke="currentColor" stroke-width="6" fill="none"/>
-          <rect x="30" y="45" width="40" height="40" rx="8" stroke="currentColor" stroke-width="6" fill="none"/>
-          <circle cx="50" cy="65" r="8" stroke="currentColor" stroke-width="5" fill="none"/>
-        </svg>
-        Cosmetics
-      </button>
-
+      <button class="filter-btn" onclick="filterProducts('Technology')">Technology</button>
+      <button class="filter-btn" onclick="filterProducts('Clothing')">Clothing</button>
+      <button class="filter-btn" onclick="filterProducts('Shoes')">Shoes</button>
+      <button class="filter-btn" onclick="filterProducts('Jewelry')">Jewelry</button>
+      <button class="filter-btn" onclick="filterProducts('Toys')">Toys</button>
+      <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
+      <button class="filter-btn" onclick="filterProducts('Home & Living')">Home & Living</button>
+      <button class="filter-btn" onclick="filterProducts('Cosmetics')">Cosmetics</button>
     </div>
 
-    <!-- ARAMA -->
     <div style="margin-bottom:32px;">
       <input
         type="text"
         id="searchInput"
-        placeholder="ğŸ” Search products..."
-        style="
-          background: #0d0d24;
-          border: 1px solid #1a1a3a;
-          color: white;
-          padding: 12px 20px;
-          border-radius: 6px;
-          font-size: 14px;
-          width: 100%;
-          max-width: 400px;
-          outline: none;
-          letter-spacing: 0.5px;
-          transition: border-color 0.2s;
-        "
+        placeholder="Search products..."
+        style="background:#0d0d24; border:1px solid #1a1a3a; color:white; padding:12px 20px; border-radius:6px; font-size:14px; width:100%; max-width:400px; outline:none;"
         onfocus="this.style.borderColor='#00D4FF'"
         onblur="this.style.borderColor='#1a1a3a'"
         oninput="searchProducts(this.value)"
       />
     </div>
 
-    <!-- ÃœRÃœN SAYISI -->
     <div id="productCount" style="color:#7a7a9a; font-size:13px; letter-spacing:1px; margin-bottom:24px;"></div>
-
-    <!-- ÃœRÃœN LÄ°STESÄ° -->
     <div class="products-grid" id="productsGrid"></div>
   </section>
 
@@ -156,7 +86,7 @@
         <span>ARCNOVA</span>
         <p>Shop the Future</p>
       </div>
-      <p class="footer-copy">Â© 2026 ArcNova. Powered by Arc Network.</p>
+      <p class="footer-copy">&copy; 2026 ArcNova. Powered by Arc Network.</p>
     </div>
   </footer>
 
@@ -168,30 +98,25 @@
     async function loadProducts() {
       const res = await fetch('/api/products');
       allProducts = await res.json();
-
       const params = new URLSearchParams(window.location.search);
       const urlCategory = params.get('category');
       if (urlCategory) {
         activeCategory = urlCategory;
         document.querySelectorAll('.filter-btn').forEach(btn => {
-          const text = btn.textContent.trim();
-          btn.classList.toggle('active', text === urlCategory);
+          btn.classList.toggle('active', btn.textContent.trim() === urlCategory);
         });
       }
-
       applyFilters();
     }
 
     function renderProducts(products) {
       const grid = document.getElementById('productsGrid');
       const count = document.getElementById('productCount');
-      count.textContent = `${products.length} products found`;
-
+      count.textContent = products.length + ' products found';
       if (products.length === 0) {
         grid.innerHTML = '<p style="color:#7a7a9a; text-align:center; grid-column:1/-1; padding:60px 0;">No products found.</p>';
         return;
       }
-
       grid.innerHTML = products.map(p => `
         <div class="product-card" onclick="window.location.href='/product.html?id=${p.id}'">
           <img src="${p.image}" alt="${p.name}">
@@ -225,17 +150,13 @@
         filtered = filtered.filter(p => p.category === activeCategory);
       }
       if (query) {
-        filtered = filtered.filter(p =>
-          p.name.toLowerCase().includes(query.toLowerCase())
-        );
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
       }
       renderProducts(filtered);
     }
 
     loadProducts();
   </script>
-<script src="/js/navbar.js"></script></body>
+  <script src="/js/navbar.js"></script>
+</body>
 </html>
-
-
-
