@@ -20,11 +20,8 @@ function updateCartCount() {
 
 function addToCart(product) {
   const existing = cart.find(i => i.id === product.id);
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
+  if (existing) existing.quantity += 1;
+  else cart.push({ ...product, quantity: 1 });
   localStorage.setItem('arcnova-cart', JSON.stringify(cart));
   updateCartCount();
   showToast(product.name + ' added to cart!');
@@ -48,20 +45,20 @@ function showWalletModal() {
     modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(4px);';
     const walletOptions = detectedProviders.length > 0
       ? detectedProviders.map(p => `
-          <button onclick="connectWithProvider('${p.info.uuid}')" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:12px;text-align:left;" onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
+          <button onclick="window.connectWithProvider('${p.info.uuid}')" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:12px;text-align:left;" onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
             <img src="${p.info.icon}" width="32" height="32" style="border-radius:8px;" onerror="this.style.display='none'"/>
             <span>${p.info.name}</span>
           </button>`).join('')
       : window.ethereum
-        ? `<button onclick="connectWithEthereum()" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:12px;" onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
+        ? `<button onclick="window.connectWithEthereum()" style="width:100%;background:#0d0d24;border:1px solid #1a1a3a;color:white;padding:16px 20px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:12px;" onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
             <span>Browser Wallet</span>
           </button>`
-        : `<p style="color:#888;text-align:center;padding:20px;">No wallet found. Please install MetaMask.</p>`;
+        : `<p style="color:#888;text-align:center;padding:20px;">No wallet found. Please install MetaMask or Auro Wallet.</p>`;
     modal.innerHTML = `
       <div style="background:#0d0d24;border:1px solid #1a1a3a;border-radius:20px;padding:32px;width:100%;max-width:400px;margin:20px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
           <h2 style="font-size:20px;font-weight:700;color:white;margin:0;">Connect Wallet</h2>
-          <button onclick="document.getElementById('walletModal').remove()" style="background:none;border:none;color:#888;cursor:pointer;font-size:24px;line-height:1;">x</button>
+          <button onclick="document.getElementById('walletModal').remove()" style="background:none;border:none;color:#888;cursor:pointer;font-size:24px;line-height:1;">&#x2715;</button>
         </div>
         <p style="color:#888;font-size:13px;margin-bottom:20px;">Select your wallet to connect to ArcNova</p>
         ${walletOptions}
@@ -71,7 +68,7 @@ function showWalletModal() {
   }, 100);
 }
 
-async function connectWithProvider(uuid) {
+window.connectWithProvider = async function(uuid) {
   const walletData = detectedProviders.find(p => p.info.uuid === uuid);
   if (!walletData) return;
   try {
@@ -81,13 +78,12 @@ async function connectWithProvider(uuid) {
     document.getElementById('walletModal')?.remove();
     handleAccounts(accounts);
   } catch (err) {
-    console.error(err);
     if (err.code === 4001) alert('Connection rejected.');
     else alert('Could not connect: ' + err.message);
   }
 }
 
-async function connectWithEthereum() {
+window.connectWithEthereum = async function() {
   try {
     selectedProvider = window.ethereum;
     window.__arcnovaProvider = selectedProvider;
@@ -95,12 +91,11 @@ async function connectWithEthereum() {
     document.getElementById('walletModal')?.remove();
     handleAccounts(accounts);
   } catch (err) {
-    console.error(err);
     alert('Could not connect: ' + err.message);
   }
 }
 
-function connectWallet() {
+window.connectWallet = function() {
   const address = localStorage.getItem('walletAddress');
   if (address) showWalletOptions();
   else showWalletModal();
@@ -117,7 +112,6 @@ function handleAccounts(accounts) {
     btn.style.color = '#00D4FF';
   }
   localStorage.setItem('walletAddress', address);
-  window.__arcnovaProvider = selectedProvider;
   showToast('Wallet connected!');
 }
 
@@ -134,25 +128,21 @@ function showWalletOptions() {
       <div style="font-size:11px;color:#888;margin-bottom:4px;">CONNECTED</div>
       <div style="font-family:monospace;font-size:13px;color:#00D4FF;">${short}</div>
     </div>
-    <button onclick="copyAddress()" style="width:100%;background:none;border:none;color:#ccc;padding:10px 16px;cursor:pointer;font-size:13px;text-align:left;border-radius:8px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">
-      Copy Address
-    </button>
-    <button onclick="disconnectWallet()" style="width:100%;background:none;border:none;color:#ff4444;padding:10px 16px;cursor:pointer;font-size:13px;text-align:left;border-radius:8px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">
-      Disconnect
-    </button>`;
+    <button onclick="window.copyAddress()" style="width:100%;background:none;border:none;color:#ccc;padding:10px 16px;cursor:pointer;font-size:13px;text-align:left;border-radius:8px;" onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">Copy Address</button>
+    <button onclick="window.disconnectWallet()" style="width:100%;background:none;border:none;color:#ff4444;padding:10px 16px;cursor:pointer;font-size:13px;text-align:left;border-radius:8px;" onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">Disconnect</button>`;
   document.body.appendChild(modal);
   setTimeout(() => {
     document.addEventListener('click', (e) => { if (!modal.contains(e.target)) modal.remove(); }, { once: true });
   }, 100);
 }
 
-function copyAddress() {
+window.copyAddress = function() {
   const address = localStorage.getItem('walletAddress');
   if (address) { navigator.clipboard.writeText(address); showToast('Address copied!'); }
   document.getElementById('walletOptionsModal')?.remove();
 }
 
-function disconnectWallet() {
+window.disconnectWallet = function() {
   localStorage.removeItem('walletAddress');
   selectedProvider = null;
   window.__arcnovaProvider = null;
@@ -170,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
   window.dispatchEvent(new Event('eip6963:requestProvider'));
   const walletBtn = document.getElementById('connectWallet');
-  if (walletBtn) walletBtn.addEventListener('click', connectWallet);
+  if (walletBtn) walletBtn.addEventListener('click', window.connectWallet);
   const saved = localStorage.getItem('walletAddress');
   if (saved && walletBtn) {
     const short = saved.slice(0, 6) + '...' + saved.slice(-4);
@@ -187,17 +177,14 @@ async function loadFeaturedProducts() {
   try {
     const res = await fetch('/api/products');
     const products = await res.json();
-    const featured = products.slice(0, 3);
-    grid.innerHTML = featured.map(p => `
+    grid.innerHTML = products.slice(0, 3).map(p => `
       <div class="product-card" onclick="window.location.href='/product.html?id=${p.id}'">
         <img src="${p.image}" alt="${p.name}">
         <div class="product-info">
           <div class="product-category">${p.category}</div>
           <div class="product-name">${p.name}</div>
           <div class="product-price">${p.price} <span>USDC</span></div>
-          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">
-            Add to Cart
-          </button>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">Add to Cart</button>
         </div>
       </div>`).join('');
   } catch (err) { console.error(err); }
