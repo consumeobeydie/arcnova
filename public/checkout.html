@@ -183,6 +183,7 @@
     const USDC_CONTRACT = '0x3600000000000000000000000000000000000000';
     const STORE_WALLET = '0xcAaDa98159b82b80D7940CFb527f7Ab44E650Cc8';
     const ARC_CHAIN_ID = '0x4CEDD2';
+    const ARC_CHAIN_ID_DEC = 5042002;
     const USDC_ABI = [
       'function transfer(address to, uint256 amount) returns (bool)',
       'function balanceOf(address owner) view returns (uint256)',
@@ -230,8 +231,8 @@
             params: [{
               chainId: ARC_CHAIN_ID,
               chainName: 'Arc Testnet',
-              nativeCurrency: { name: 'ARC', symbol: 'ARC', decimals: 18 },
-              rpcUrls: ['https://arc-testnet.drpc.org'],
+              nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 6 },
+              rpcUrls: ['https://arc-testnet.drpc.org', 'https://rpc.quicknode.testnet.arc.network'],
               blockExplorerUrls: ['https://testnet.arcscan.app']
             }]
           });
@@ -257,14 +258,13 @@
         errorEl.style.display = 'none';
 
         let ethProvider = window.__arcnovaProvider || window.ethereum;
-
         await switchToArc(ethProvider);
 
         statusEl.textContent = 'Please confirm the transaction in your wallet...';
         payBtn.textContent = 'Waiting for approval...';
 
-        const provider = new ethers.BrowserProvider(ethProvider);
-        provider.pollingInterval = 4000;
+        const network = new ethers.Network('Arc Testnet', ARC_CHAIN_ID_DEC);
+        const provider = new ethers.BrowserProvider(ethProvider, network, { staticNetwork: true });
         const signer = await provider.getSigner();
         const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
 
@@ -324,6 +324,3 @@
   <script src="/js/navbar.js"></script>
 </body>
 </html>
-
-
-
