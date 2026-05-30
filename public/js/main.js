@@ -1,4 +1,4 @@
-let cart = JSON.parse(localStorage.getItem('arcnova-cart')) || [];
+﻿let cart = JSON.parse(localStorage.getItem('arcnova-cart')) || [];
 let selectedProvider = null;
 const detectedProviders = [];
 
@@ -26,7 +26,7 @@ function addToCart(product) {
   }
   localStorage.setItem('arcnova-cart', JSON.stringify(cart));
   updateCartCount();
-  showToast(`${product.name} added to cart! 🛒`);
+  showToast(`${product.name} added to cart! ğŸ›’`);
 }
 
 function showToast(message) {
@@ -98,7 +98,7 @@ function showWalletModal() {
             gap: 12px;
             margin-bottom: 12px;
           " onmouseover="this.style.borderColor='#00D4FF'" onmouseout="this.style.borderColor='#1a1a3a'">
-            🦊 <span>Browser Wallet</span>
+            ğŸ¦Š <span>Browser Wallet</span>
           </button>`
         : `<p style="color:#888; text-align:center; padding:20px;">No wallet found. Please install MetaMask.</p>`;
 
@@ -117,7 +117,7 @@ function showWalletModal() {
           <button onclick="document.getElementById('walletModal').remove()" style="
             background:none; border:none; color:#888;
             cursor:pointer; font-size:24px; line-height:1;
-          ">×</button>
+          ">Ã—</button>
         </div>
         <p style="color:#888; font-size:13px; margin-bottom:20px;">Select your wallet to connect to ArcNova</p>
         ${walletOptions}
@@ -183,13 +183,13 @@ function handleAccounts(accounts) {
   const short = `${address.slice(0, 6)}...${address.slice(-4)}`;
   const btn = document.getElementById('connectWallet');
   if (btn) {
-    btn.textContent = `✅ ${short}`;
+    btn.textContent = `âœ… ${short}`;
     btn.style.background = 'rgba(0,212,255,0.1)';
     btn.style.color = '#00D4FF';
   }
   localStorage.setItem('walletAddress', address);
   window.__arcnovaProvider = selectedProvider;
-  showToast('Wallet connected! ✅');
+  showToast('Wallet connected! âœ…');
 }
 
 function showWalletOptions() {
@@ -223,7 +223,7 @@ function showWalletOptions() {
       text-align:left; border-radius:8px;
       display:flex; align-items:center; gap:8px;
     " onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">
-      📋 Copy Address
+      ğŸ“‹ Copy Address
     </button>
     <button onclick="disconnectWallet()" style="
       width:100%; background:none; border:none; color:#ff4444;
@@ -231,7 +231,7 @@ function showWalletOptions() {
       text-align:left; border-radius:8px;
       display:flex; align-items:center; gap:8px;
     " onmouseover="this.style.background='#080818'" onmouseout="this.style.background='none'">
-      🔌 Disconnect
+      ğŸ”Œ Disconnect
     </button>
   `;
 
@@ -248,7 +248,7 @@ function copyAddress() {
   const address = localStorage.getItem('walletAddress');
   if (address) {
     navigator.clipboard.writeText(address);
-    showToast('Address copied! 📋');
+    showToast('Address copied! ğŸ“‹');
   }
   document.getElementById('walletOptionsModal')?.remove();
 }
@@ -260,13 +260,13 @@ function disconnectWallet() {
 
   const btn = document.getElementById('connectWallet');
   if (btn) {
-    btn.textContent = '🔗 Connect Wallet';
+    btn.textContent = 'ğŸ”— Connect Wallet';
     btn.style.background = 'none';
     btn.style.color = '#00D4FF';
   }
 
   document.getElementById('walletOptionsModal')?.remove();
-  showToast('Wallet disconnected! 🔌');
+  showToast('Wallet disconnected! ğŸ”Œ');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('walletAddress');
   if (saved && walletBtn) {
     const short = `${saved.slice(0, 6)}...${saved.slice(-4)}`;
-    walletBtn.textContent = `✅ ${short}`;
+    walletBtn.textContent = `âœ… ${short}`;
     walletBtn.style.background = 'rgba(0,212,255,0.1)';
     walletBtn.style.color = '#00D4FF';
   }

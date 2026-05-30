@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ArcNova â€” Product</title>
+  <title>ArcNova - Product</title>
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 </head>
@@ -36,9 +36,9 @@
         <a href="/products.html">Products</a>
       </div>
       <div class="nav-actions">
-        <button class="btn-wallet" id="connectWallet">ğŸ”— Connect Wallet</button>
+        <button class="btn-wallet" id="connectWallet">Connect Wallet</button>
         <div class="cart-icon" onclick="window.location.href='/cart.html'">
-          ğŸ›’ <span class="cart-count" id="cartCount">0</span>
+          Cart <span class="cart-count" id="cartCount">0</span>
         </div>
       </div>
     </div>
@@ -46,34 +46,30 @@
 
   <section style="padding: 120px 24px 80px; max-width: 1200px; margin: 0 auto;">
     <a href="/products.html" style="color:#888; text-decoration:none; font-size:14px; display:inline-block; margin-bottom:32px;">
-      â† Back to Products
+      &larr; Back to Products
     </a>
-
     <div id="productDetail" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;">
       <div style="color:#888;">Loading...</div>
     </div>
   </section>
 
-  <!-- YORUMLAR -->
   <section style="padding: 0 24px 80px; max-width: 1200px; margin: 0 auto;">
     <div style="border-top: 1px solid #1a1a3a; padding-top: 60px;">
       <h2 style="font-size:28px; font-weight:700; margin-bottom:8px;">Customer Reviews</h2>
       <p style="color:#888; font-size:13px; margin-bottom:32px;">
-        â›“ï¸ All reviews are recorded on the Arc blockchain. A fee of <strong style="color:#00D4FF;">0.001 USDC</strong> is required to submit a review.
+        All reviews are recorded on the Arc blockchain. A fee of <strong style="color:#00D4FF;">0.001 USDC</strong> is required to submit a review.
       </p>
 
-      <!-- Yorum Formu -->
       <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:16px; padding:24px; margin-bottom:32px;">
         <h3 style="font-size:16px; margin-bottom:16px;">Write a Review</h3>
-
         <div style="margin-bottom:16px;">
           <label style="color:#888; font-size:13px; display:block; margin-bottom:8px;">Rating</label>
           <div id="starRating" style="display:flex; gap:8px; font-size:28px; cursor:pointer;">
-            <span onclick="setRating(1)" style="opacity:0.3; transition:opacity 0.2s;">â­</span>
-            <span onclick="setRating(2)" style="opacity:0.3; transition:opacity 0.2s;">â­</span>
-            <span onclick="setRating(3)" style="opacity:0.3; transition:opacity 0.2s;">â­</span>
-            <span onclick="setRating(4)" style="opacity:0.3; transition:opacity 0.2s;">â­</span>
-            <span onclick="setRating(5)" style="opacity:1; transition:opacity 0.2s;">â­</span>
+            <span onclick="setRating(1)" style="opacity:0.3; transition:opacity 0.2s;">&#11088;</span>
+            <span onclick="setRating(2)" style="opacity:0.3; transition:opacity 0.2s;">&#11088;</span>
+            <span onclick="setRating(3)" style="opacity:0.3; transition:opacity 0.2s;">&#11088;</span>
+            <span onclick="setRating(4)" style="opacity:0.3; transition:opacity 0.2s;">&#11088;</span>
+            <span onclick="setRating(5)" style="opacity:1; transition:opacity 0.2s;">&#11088;</span>
           </div>
         </div>
 
@@ -85,7 +81,7 @@
         "></textarea>
 
         <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#00D4FF;">
-          ğŸ’¡ Submitting a review costs <strong>0.001 USDC</strong> â€” prevents spam and records your review on-chain.
+          Submitting a review costs <strong>0.001 USDC</strong> &mdash; prevents spam and records your review on-chain.
         </div>
 
         <div id="reviewStatus" style="display:none; background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#00D4FF;"></div>
@@ -96,7 +92,7 @@
           color:white; border:none; padding:12px 24px;
           border-radius:10px; cursor:pointer; font-size:14px; font-weight:600;
         ">
-          â›“ï¸ Submit Review on Blockchain
+          Submit Review on Blockchain
         </button>
       </div>
 
@@ -110,7 +106,7 @@
         <span>ARCNOVA</span>
         <p>Shop the Future</p>
       </div>
-      <p class="footer-copy">Â© 2026 ArcNova. Powered by Arc Network.</p>
+      <p class="footer-copy">&copy; 2026 ArcNova. Powered by Arc Network.</p>
     </div>
   </footer>
 
@@ -119,20 +115,11 @@
       #productDetail { grid-template-columns: 1fr !important; }
     }
     .review-card {
-      background: #0d0d24;
-      border: 1px solid #1a1a3a;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
-      transition: border-color 0.2s;
+      background: #0d0d24; border: 1px solid #1a1a3a;
+      border-radius: 12px; padding: 20px; margin-bottom: 16px; transition: border-color 0.2s;
     }
     .review-card:hover { border-color: #00D4FF; }
-    .review-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
+    .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
     .review-address { font-family: monospace; font-size: 13px; color: #00D4FF; }
     .review-date { color: #555; font-size: 12px; }
     .review-stars { font-size: 16px; margin-bottom: 8px; }
@@ -147,7 +134,6 @@
     const USDC_CONTRACT = '0x3600000000000000000000000000000000000000';
     const STORE_WALLET = '0xcAaDa98159b82b80D7940CFb527f7Ab44E650Cc8';
     const REVIEW_FEE = '0.001';
-
     const USDC_ABI = [
       'function transfer(address to, uint256 amount) returns (bool)',
       'function balanceOf(address owner) view returns (uint256)',
@@ -156,63 +142,51 @@
 
     let currentProduct = null;
     let selectedRating = 5;
-
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
 
     async function loadProduct() {
       const res = await fetch(`/api/products/${productId}`);
       currentProduct = await res.json();
-      document.title = `ArcNova â€” ${currentProduct.name}`;
-
+      document.title = `ArcNova - ${currentProduct.name}`;
       document.getElementById('productDetail').innerHTML = `
         <div>
-          <img src="${currentProduct.image}" alt="${currentProduct.name}" style="
-            width:100%; border-radius:16px; border:1px solid #1a1a3a;
-          "/>
+          <img src="${currentProduct.image}" alt="${currentProduct.name}" style="width:100%; border-radius:16px; border:1px solid #1a1a3a;"/>
         </div>
         <div>
-          <div style="color:#00D4FF; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">
-            ${currentProduct.category}
-          </div>
+          <div style="color:#00D4FF; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">${currentProduct.category}</div>
           <h1 style="font-size:36px; font-weight:800; margin-bottom:16px;">${currentProduct.name}</h1>
           <div style="font-size:36px; font-weight:700; color:#00D4FF; margin-bottom:24px;">
             ${currentProduct.price} <span style="font-size:16px; color:#888;">USDC</span>
           </div>
-          <p style="color:#aaa; line-height:1.8; margin-bottom:32px; font-size:16px;">
-            ${currentProduct.description}
-          </p>
+          <p style="color:#aaa; line-height:1.8; margin-bottom:32px; font-size:16px;">${currentProduct.description}</p>
           <div style="background:#0d0d24; border:1px solid #1a1a3a; border-radius:12px; padding:16px; margin-bottom:24px; font-size:13px; color:#888;">
-            <div style="margin-bottom:6px;">ğŸ”— <strong style="color:#fff;">Network:</strong> Arc Testnet</div>
-            <div style="margin-bottom:6px;">ğŸ’³ <strong style="color:#fff;">Payment:</strong> USDC</div>
-            <div>ğŸ“¦ <strong style="color:#fff;">Stock:</strong> ${currentProduct.stock} units</div>
+            <div style="margin-bottom:6px;"><strong style="color:#fff;">Network:</strong> Arc Testnet</div>
+            <div style="margin-bottom:6px;"><strong style="color:#fff;">Payment:</strong> USDC</div>
+            <div><strong style="color:#fff;">Stock:</strong> ${currentProduct.stock} units</div>
           </div>
           <button onclick="addToCart(currentProduct)" style="
             width:100%; background:linear-gradient(135deg, #00D4FF, #7B2FBE);
             color:white; border:none; padding:16px; border-radius:12px;
-            cursor:pointer; font-size:16px; font-weight:700; margin-bottom:12px;
-          ">
-            ğŸ›’ Add to Cart
+            cursor:pointer; font-size:16px; font-weight:700; margin-bottom:12px;">
+            Add to Cart
           </button>
           <button onclick="window.location.href='/cart.html'" style="
             width:100%; background:none; border:1px solid #1a1a3a;
-            color:#888; padding:14px; border-radius:12px; cursor:pointer; font-size:15px; transition:all 0.2s;
-          " onmouseover="this.style.borderColor='#00D4FF'; this.style.color='#00D4FF'"
-             onmouseout="this.style.borderColor='#1a1a3a'; this.style.color='#888'">
+            color:#888; padding:14px; border-radius:12px; cursor:pointer; font-size:15px; transition:all 0.2s;"
+            onmouseover="this.style.borderColor='#00D4FF'; this.style.color='#00D4FF'"
+            onmouseout="this.style.borderColor='#1a1a3a'; this.style.color='#888'">
             View Cart
           </button>
         </div>
       `;
-
       loadReviews();
     }
 
     function setRating(rating) {
       selectedRating = rating;
       const stars = document.querySelectorAll('#starRating span');
-      stars.forEach((s, i) => {
-        s.style.opacity = i < rating ? '1' : '0.3';
-      });
+      stars.forEach((s, i) => { s.style.opacity = i < rating ? '1' : '0.3'; });
     }
 
     async function loadReviews() {
@@ -220,102 +194,67 @@
         const res = await fetch(`/api/payment/reviews/${productId}`);
         const productReviews = await res.json();
         const list = document.getElementById('reviewsList');
-
         if (productReviews.length === 0) {
           list.innerHTML = '<p style="color:#555; text-align:center; padding:40px;">No reviews yet. Be the first to review!</p>';
           return;
         }
-
         list.innerHTML = productReviews.map(r => `
           <div class="review-card">
             <div class="review-header">
               <div>
                 <div class="review-address">${r.address}</div>
-                <div class="review-date">${r.date}</div>
+                <div class="review-date">${r.date || new Date(r.created_at).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})}</div>
               </div>
-              <div class="review-stars">${'â­'.repeat(r.rating)}</div>
+              <div class="review-stars">${'&#11088;'.repeat(r.rating)}</div>
             </div>
             <div class="review-text">${r.text}</div>
             <div class="review-tx">
-              â›“ï¸ <a href="https://testnet.arcscan.app/tx/${r.txHash}" target="_blank">
-                View on ArcScan: ${r.txHash.slice(0, 20)}...
+              <a href="https://testnet.arcscan.app/tx/${r.txHash || r.tx_hash}" target="_blank">
+                View on ArcScan: ${(r.txHash || r.tx_hash || '').slice(0, 20)}...
               </a>
             </div>
           </div>
         `).join('');
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) { console.error(err); }
     }
 
     async function submitReview() {
       const wallet = localStorage.getItem('walletAddress');
-      if (!wallet) {
-        alert('Please connect your wallet first!');
-        return;
-      }
-
+      if (!wallet) { alert('Please connect your wallet first!'); return; }
       const text = document.getElementById('reviewText').value.trim();
-      if (!text) {
-        alert('Please write a review!');
-        return;
-      }
-
+      if (!text) { alert('Please write a review!'); return; }
       const btn = document.getElementById('submitReviewBtn');
       const statusEl = document.getElementById('reviewStatus');
       const errorEl = document.getElementById('reviewError');
-
       try {
-        btn.disabled = true;
-        btn.textContent = 'â³ Waiting for approval...';
+        btn.disabled = true; btn.textContent = 'Waiting for approval...';
         statusEl.style.display = 'block';
-        statusEl.textContent = 'â³ Please confirm the 0.001 USDC payment in MetaMask...';
+        statusEl.textContent = 'Please confirm the 0.001 USDC payment in your wallet...';
         errorEl.style.display = 'none';
-
         let ethProvider = window.__arcnovaProvider || window.ethereum;
         const provider = new ethers.BrowserProvider(ethProvider);
         const signer = await provider.getSigner();
         const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
-
         const amount = ethers.parseUnits(REVIEW_FEE, 6);
         const tx = await usdcContract.transfer(STORE_WALLET, amount);
-
-        statusEl.textContent = 'â³ Transaction submitted, waiting for confirmation...';
+        statusEl.textContent = 'Transaction submitted, waiting for confirmation...';
         const receipt = await tx.wait();
         const txHash = receipt.hash;
-
-        // Server'a kaydet
         await fetch('/api/payment/review', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            productId,
-            address: wallet,
-            rating: selectedRating,
-            text,
-            txHash
-          })
+          body: JSON.stringify({ productId, address: wallet, rating: selectedRating, text, txHash })
         });
-
         document.getElementById('reviewText').value = '';
-        btn.disabled = false;
-        btn.textContent = 'â›“ï¸ Submit Review on Blockchain';
+        btn.disabled = false; btn.textContent = 'Submit Review on Blockchain';
         statusEl.style.display = 'none';
-
         loadReviews();
-        showToast('Review submitted on blockchain! â›“ï¸');
-
+        showToast('Review submitted on blockchain!');
       } catch (err) {
         console.error(err);
-        btn.disabled = false;
-        btn.textContent = 'â›“ï¸ Submit Review on Blockchain';
+        btn.disabled = false; btn.textContent = 'Submit Review on Blockchain';
         statusEl.style.display = 'none';
-
-        if (err.code === 4001) {
-          errorEl.textContent = 'âŒ Transaction rejected. Please try again.';
-        } else {
-          errorEl.textContent = 'âŒ Error: ' + (err.reason || err.message);
-        }
+        errorEl.textContent = err.code === 4001 ? 'Transaction rejected.' : 'Error: ' + (err.reason || err.message);
         errorEl.style.display = 'block';
       }
     }
@@ -323,5 +262,6 @@
     loadProduct();
     setRating(5);
   </script>
-<script src="/js/navbar.js"></script></body>
+  <script src="/js/navbar.js"></script>
+</body>
 </html>
