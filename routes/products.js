@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 
 const products = [
@@ -36,7 +36,7 @@ const products = [
     price: 0.003,
     category: "Technology",
     image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop&auto=format",
-    description: "Waterproof portable speaker with 360° sound and 24h battery.",
+    description: "Waterproof portable speaker with 360Â° sound and 24h battery.",
     stock: 20
   },
   {
@@ -364,7 +364,7 @@ const products = [
     name: "Rose Water Toner",
     price: 0.002,
     category: "Cosmetics",
-    image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1601049676869-702ea24cfd58?w=400&h=400&fit=crop&auto=format",
     description: "Pure rose water facial toner for hydration and pore tightening.",
     stock: 30
   },
