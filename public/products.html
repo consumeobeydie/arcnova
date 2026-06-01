@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArcNova — Products</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <defs>
+            <radialGradient id="sg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
+            </radialGradient>
+          </defs>
+          <polygon points="50,4 53,46 50,50 47,46" fill="url(#sg)"/>
+          <polygon points="50,96 53,54 50,50 47,54" fill="url(#sg)"/>
+          <polygon points="96,50 54,53 50,50 54,47" fill="url(#sg)"/>
+          <polygon points="4,50 46,53 50,50 46,47" fill="url(#sg)"/>
+          <polygon points="78,22 52,48 50,50 48,46" fill="#00D4FF" opacity="0.8"/>
+          <polygon points="22,78 48,52 50,50 52,54" fill="#00D4FF" opacity="0.8"/>
+          <polygon points="22,22 48,48 50,50 52,46" fill="#7B2FBE" opacity="0.8"/>
+          <polygon points="78,78 52,52 50,50 48,54" fill="#7B2FBE" opacity="0.8"/>
+          <circle cx="50" cy="50" r="4" fill="white"/>
+        </svg>
+        <span>ARCNOVA</span>
+      </div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/products.html">Products</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-wallet" id="connectWallet">Connect Wallet</button>
+        <div class="cart-icon" onclick="window.location.href='/cart.html'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section style="padding: 120px 24px 80px; max-width: 1200px; margin: 0 auto;">
+    <h1 style="font-size: 40px; font-weight: 800; margin-bottom: 8px; letter-spacing:-1px;">All Products</h1>
+    <p style="color: #7a7a9a; margin-bottom: 40px; letter-spacing:1px; font-size:13px; text-transform:uppercase;">Pay with USDC on Arc Network</p>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+      <button class="filter-btn active" onclick="filterProducts('All')">All</button>
+      <button class="filter-btn" onclick="filterProducts('Technology')">Technology</button>
+      <button class="filter-btn" onclick="filterProducts('Clothing')">Clothing</button>
+      <button class="filter-btn" onclick="filterProducts('Shoes')">Shoes</button>
+      <button class="filter-btn" onclick="filterProducts('Jewelry')">Jewelry</button>
+      <button class="filter-btn" onclick="filterProducts('Toys')">Toys</button>
+      <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
+      <button class="filter-btn" onclick="filterProducts('Home & Living')">Home & Living</button>
+      <button class="filter-btn" onclick="filterProducts('Cosmetics')">Cosmetics</button>
+    </div>
+
+    <div style="margin-bottom:32px;">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products..."
+        style="background:#0d0d24; border:1px solid #1a1a3a; color:white; padding:12px 20px; border-radius:6px; font-size:14px; width:100%; max-width:400px; outline:none;"
+        onfocus="this.style.borderColor='#00D4FF'"
+        onblur="this.style.borderColor='#1a1a3a'"
+        oninput="searchProducts(this.value)"
+      />
+    </div>
+
+    <div id="productCount" style="color:#7a7a9a; font-size:13px; letter-spacing:1px; margin-bottom:24px;"></div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <span>ARCNOVA</span>
+        <p>Shop the Future</p>
+      </div>
+      <p class="footer-copy">&copy; 2026 ArcNova. Powered by Arc Network.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    let allProducts = [];
+    let activeCategory = 'All';
+
+    async function loadProducts() {
+      const res = await fetch('/api/products');
+      allProducts = await res.json();
+      const params = new URLSearchParams(window.location.search);
+      const urlCategory = params.get('category');
+      if (urlCategory) {
+        activeCategory = urlCategory;
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.textContent.trim() === urlCategory);
+        });
+      }
+      applyFilters();
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById('productsGrid');
+      const count = document.getElementById('productCount');
+      count.textContent = products.length + ' products found';
+      if (products.length === 0) {
+        grid.innerHTML = '<p style="color:#7a7a9a; text-align:center; grid-column:1/-1; padding:60px 0;">No products found.</p>';
+        return;
+      }
+      grid.innerHTML = products.map(p => `
+        <div class="product-card" onclick="window.location.href='/product.html?id=${p.id}'">
+          <img src="${p.image}" alt="${p.name}">
+          <div class="product-info">
+            <div class="product-category">${p.category}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-price">${p.price} <span>USDC</span></div>
+            <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterProducts(category) {
+      activeCategory = category;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === category);
+      });
+      applyFilters();
+    }
+
+    function searchProducts(query) {
+      applyFilters(query);
+    }
+
+    function applyFilters(query = document.getElementById('searchInput').value) {
+      let filtered = allProducts;
+      if (activeCategory !== 'All') {
+        filtered = filtered.filter(p => p.category === activeCategory);
+      }
+      if (query) {
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+      }
+      renderProducts(filtered);
+    }
+
+    loadProducts();
+  </script>
+  <script src="/js/navbar.js"></script>
+</body>
+</html>
