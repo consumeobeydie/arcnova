@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +174,14 @@
           const short = addr.slice(0,6) + '...' + addr.slice(-4);
           const date  = new Date(Number(r.timestamp) * 1000).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
           const stars = '⭐'.repeat(Number(r.rating));
-          return '<div class="review-card"><div class="review-header"><div><div class="review-address">' + short + '</div><div class="review-date">' + date + '</div></div><div class="review-stars">' + stars + '</div></div><div class="review-text">' + r.text + '</div><div class="review-tx"><a href="https://testnet.arcscan.app/address/' + addr + '" target="_blank">View on ArcScan</a></div></div>';
+          return `<div class="review-card">
+            <div class="review-header">
+              <div><div class="review-address">${short}</div><div class="review-date">${date}</div></div>
+              <div class="review-stars">${stars}</div>
+            </div>
+            <div class="review-text">${r.text}</div>
+            <div class="review-tx"><a href="https://testnet.arcscan.app/address/${addr}" target="_blank">View on ArcScan ↗</a></div>
+          </div>`;
         }).join('');
       } catch (err) {
         console.error(err);

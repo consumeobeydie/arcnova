@@ -33,9 +33,10 @@ router.post('/order', async (req, res) => {
 // Yorum kaydet
 router.post('/review', async (req, res) => {
   try {
-    const { productId, address, rating, text, txHash } = req.body;
-    if (!productId || !address || !rating || !text || !txHash) {
-      return res.status(400).json({ error: 'Missing fields' });
+    const body = req.body || {};
+    const { productId, address, rating, text, txHash } = body;
+    if (!productId || !address || !rating || !text) {
+      return res.status(400).json({ error: 'Missing fields', received: body });
     }
     await supabase('reviews', 'POST', {
       product_id: parseInt(productId),
